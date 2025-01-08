@@ -1,0 +1,1 @@
+ C:\\Users\\paree\\OneDrive\\Desktop\\pregnopal_mobile\\.dart_tool\\flutter_build\\f61b81a1e9dd0acff5708cbfc91f590a\\native_assets.yaml: 

@@ -1,0 +1,426 @@
+{
+  "appName": "Pregnopal",
+  "welcome": "Welcome!",
+  "commonErrors": {
+    "serverError": "Server error",
+    "networkError": "Network error",
+    "unknownError": "Unknown error",
+    "somethingWentWrong": "Something went wrong",
+    "noInternetConnection": "No internet connection",
+    "noDataFound": "No data found",
+    "noDataAvailable": "No data available",
+    "noData": "No data",
+    "otpFill": "Please fill the OTP",
+    "filePick": "An error occurred while picking the file. Please try again.",
+    "googleLoginFailed": "Google login failed"
+  },
+  "commonText": {
+    "iAgreeWith": "I agree with",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "and": "and",
+    "submit": "Submit",
+    "next": "Next",
+    "back": "Back",
+    "continue": "Continue",
+    "search": "Search {item}",
+    "na": "N/A",
+    "typeAMessage": "Type a message",
+    "reply": "Reply",
+    "copy": "Copy",
+    "delete": "Delete",
+    "404Page": "404 Page Not Found",
+    "follow": "Follow",
+    "unfollow": "Unfollow",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "social": "Social",
+    "interests": "Interests",
+    "viewAll": "View All",
+    "saveChanges": "Save Changes",
+    "savedSuccessfully": "Saved successfully",
+    "viewDetails": "View Details",
+    "usageRights": "Usage Rights",
+    "contentType": "Content Type",
+    "linkInBio": "Link in Bio",
+    "questions": "Questions",
+    "typeHere": "Type here",
+    "filtersSorting": "Filters & Sorting",
+    "categories": "Categories",
+    "clearAll": "Clear All",
+    "verify": "Verify",
+    "notification": "Notification",
+    "format": "Format",
+    "followingBrands": "Following Brands Only",
+    "inPerson": "In Person/Online",
+    "followersRange": "Followers Range",
+    "google": "Google",
+    "apple": "Apple",
+    "facebook": "Facebook",
+    "campaigns": "Campaigns",
+    "campaign": "Campaign",
+    "Opportunity": "Opportunity",
+    "allow": "Allow",
+    "maybeLater": "May be Later",
+    "unlimited": "Unlimited",
+    "ongoing": "Ongoing",
+    "requiredAccountFollowers": "Required Account Followers"
+  },
+  "appTimerText": {
+    "resendCodeIn": "Resend code in {min}:{sec}"
+  },
+  "commonFormFieldTitles": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "fullName": "Full Name",
+    "username": "Username",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "phoneNumber": "Phone Number",
+    "url": "URL",
+    "postalCode": "Postal Code",
+    "creditCard": "Credit Card",
+    "creditCardNumber": "Credit Card Number",
+    "yourEmail": "Your email",
+    "yourFullName": "Your full name",
+    "location": "Location",
+    "country": "Country",
+    "city": "City",
+    "address": "Address",
+    "flatHouseNo": "Flat/House No.",
+    "street": "Street",
+    "state": "State",
+    "zipCode": "Zip Code"
+  },
+  "formValidationErrors": {
+    "required": "{field} is required",
+    "invalid": "Invalid {field} format",
+    "minLength": "{field} must be at least {minLength} characters",
+    "doesNotMatch": "{newField} does not match {oldField}",
+    "uppercaseRequired": "{field} must contain at least one uppercase letter",
+    "lowercaseRequired": "{field} must contain at least one lowercase letter",
+    "numberRequired": "{field} must contain at least one number",
+    "specialCharacterRequired": "{field} must contain at least one special character",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "invalidEmailFormat": "Invalid email format",
+    "invalidPhoneNumber": "Invalid phone number format",
+    "invalidPostalCode": "Invalid postal code format",
+    "invalidCreditCard": "Invalid credit card number",
+    "passwordRequirements": "Password must be at least {minLength} characters long, and include uppercase, lowercase, number, and special characters"
+  },
+  "language": {
+    "language": "Language",
+    "english": "English",
+    "spanish": "Spanish",
+    "nepali": "Nepali"
+  },
+  "status": {
+    "invited": "Invited",
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "pending": "Pending",
+    "completed": "Completed",
+    "active": "Active"
+  },
+  "filterPages": {
+    "sortBy": "Sort by",
+    "filterBy": "Filter by",
+    "apply": "Apply Filters"
+  },
+  "splashScreen": {
+    "title": "Splash Screen",
+    "description": "This is a splash screen"
+  },
+  "authenticationErrors": {
+    "loginError": "Login Error",
+    "registerError": "Register Error"
+  },
+  "authenticationSuccess": {
+    "registerSuccessful": "Registered successfully",
+    "loginSuccessful": "Logged in successfully",
+    "otpSent": "OTP has been sent to your email",
+    "confirmationCodeSent": "Confirmation code has been sent to your email",
+    "passwordChanged": "Password has been changed successfully"
+  },
+  "onboardingPage": {
+    "letsStart": "Let's Start",
+    "onboarding1Title": "Welcome to Pregnopal",
+    "onboarding1Description": "Join a community of creators and connect with top brands ",
+    "onboarding2Title": "Opportunities",
+    "onboarding2Description": "Get exclusive access to the hottest experiences, products and services. All for free.",
+    "onboarding3Title": "Invite Campaigns",
+    "onboarding3Description": "Receive offers, manage your collaborations and get paid."
+  },
+  "joinPage": {
+    "title": "Join To Pregnopal!",
+    "description": "Choose how you want to sign up your account.",
+    "continueWith": "Continue with {type}"
+  },
+  "completeYourProfilePage": {
+    "title": "Complete The Details",
+    "description": "Please review your details to keep everything accurate."
+  },
+  "askVerifyPage": {
+    "linkYourAccount": "Link Your Account",
+    "tiktokDescription": "Please login with your TikTok so we know you own the account. This will not give Pregnopal access to post on your account.",
+    "instagramTitle": "Drop us a DM",
+    "instagramDescription": "So we know you own @{username}, please DM @pregnopal.verify the code",
+    "verifiedTikTokTitle": "You are Verified on TikTok",
+    "verifiedInstagramTitle": "You are Verified on Instagram",
+    "verifiedDescription": "Success! You’re all set to enjoy all features with your verified status."
+  },
+  "permissionPage": {
+    "notificationTitle": "Notification Permission",
+    "notificationDescription": "Be the first to hear the latest opportunities and never miss out on important updates, news, or features."
+  },
+  "tagsPage": {
+    "title": "What do you post about?",
+    "description": "Add relevant tags so we know what to match you with! Select up to 3 tags that best describe your content."
+  },
+  "loginPage": {
+    "welcome": "Welcome Back!",
+    "description": "Enter your email and password to sign in your account",
+    "forgotPassword": "Forgot your password?",
+    "dontHaveAccount": "Don't have an account?",
+    "signIn": "Sign in"
+  },
+  "registerPage": {
+    "welcome": "Create Pregnopal Account",
+    "description": "Sign up to start using our application",
+    "alreadyHaveAccount": "Already have an account?",
+    "signUp": "Sign up",
+    "errors": {
+      "agreeToTerms": "You must agree to the terms and privacy policy"
+    }
+  },
+  "registerConfirmCodePage": {
+    "checkMail": "Check your email",
+    "enterCode": "Enter the 6-digit code we just sent to \n{email} to continue",
+    "didntGetACode": "Didn't get a code?"
+  },
+  "socialMediaConnectionPage": {
+    "title": "Add Your Social Media Accounts",
+    "description": "Link the platforms where you create content to start collaborating with Pregnopal Brands. Don't worry, you can add more in your profile later!",
+    "errors": {
+      "noSocialMediaEntered": "Please enter at least one social media"
+    },
+    "socialMediaConnected": "Social media connected successfully"
+  },
+  "forgotPasswordPage": {
+    "title": "Forgot your password?",
+    "description": "Please enter your email below.",
+    "errors": {
+      "emailNotRegistered": "Email is not registered"
+    }
+  },
+  "changePasswordPage": {
+    "title": "Set up a new password",
+    "description": "Your password must be 8+ characters with at least 1 uppercase, 1 lowercase, 1 number, and 1 special character.",
+    "changePassword": "Change Password"
+  },
+  "changePasswordPageSuccess": {
+    "title": "SUCCESS, YOU'RE IN!",
+    "description": "Your password has been changed.",
+    "backToSignIn": "Back to sign in"
+  },
+  "homeView": {
+    "homeCampaignsTabsViewWidget": {
+      "title": "Campaigns",
+      "campaignBrief": "Campaign Brief",
+      "history": "History",
+      "progress": "Progress",
+      "paymentOffered": "Payment Offered"
+    }
+  },
+  "campaignCardWidget": {
+    "clientFeedback": "Client's Feedback"
+  },
+  "campaignEmptyListWidget": {
+    "title": "Campaign list is empty",
+    "emptyCampaignDescription": "Your list is empty. Start working with brands to see them here",
+    "emptyInvitationDescription": "You haven't got any invitations from brands yet"
+  },
+  "balanceCardWidget": {
+    "pregnopal_balance": "My PREGNOPAL Earnings"
+  },
+  "homeSpotlightInfluencersWidget": {
+    "title": "Spotlight Creators"
+  },
+  "homeHelpAndSupportViewWidget": {
+    "title": "Help & Support"
+  },
+  "messagesView": {
+    "errors": {
+      "noMessages": "No messages found"
+    }
+  },
+  "messageInputWidget": {
+    "slideToCancel": "Slide to cancel"
+  },
+  "chatOfferCardsWidget": {
+    "newOffer": "New Offer",
+    "counterOffer": "You made a counter offer",
+    "offerAccepted": "Offer Accepted",
+    "contentRejected": "Your content was rejected",
+    "contentUploaded": "You uploaded a new content",
+    "contentApproved": "Your content was approved",
+    "contentPosted": "Your content was posted",
+    "depositPaid": "The brand has sent you a partial payment of ${amount}",
+    "fullPayment": "The full payment of, ${amount}, was completed",
+    "unknownStatus": "Unknown Status"
+  },
+
+  "brandProfileOpportunitiesSectionWidget": {
+    "title": "Current Opportunities"
+  },
+  "profileViewCollaborationsSectionWidget": {
+    "title": "Collaborations",
+    "noCollaborationsTitle": "Collaborations list is empty",
+    "noCollaborationsDescription": "Your list is empty. Add your favourite collaboration here.",
+    "logosByBrandFetch": "Logos by BrandFetch"
+  },
+  "profileViewBestContentSectionWidget": {
+    "title": "Best Content",
+    "noContentTitle": "Content list is empty",
+    "noContentDescription": "Your list is empty. Add your best works here"
+  },
+  "profileViewMyAchievementsSectionWidget": {
+    "title": "My Achievements"
+  },
+  "profileViewMyRatesSectionWidget": {
+    "title": "My Rates",
+    "noRatesTitle": "Rates list is empty",
+    "noRatesDescription": "Your list is empty. Add your service rates for the future collaboration."
+  },
+  "profileViewInterestsSectionWidget": {
+    "title": "Interests",
+    "noRatesTitle": "Interests list is empty"
+  },
+  "completeProfilePage": {
+    "title": "Complete Your Profile",
+    "bio": "Fill bio information",
+    "bioDescription": "Tell us about yourself and your interests",
+    "addBio": "Add bio",
+    "social": "Add social media accounts",
+    "socialDescription": "Link your social media accounts to your profile",
+    "addSocial": "Add social media",
+    "bestContent": "Add your best content",
+    "bestContentDescription": "Add the best content in your profile to show  future clients your best works!",
+    "addContent": "Add content",
+    "rates": "Add your service rates",
+    "ratesDescription": "Display your service rates to give brands a clear idea of your collaboration options!",
+    "addRates": "Add service rates",
+    "collaborations": "Add your collaborations",
+    "collaborationsDescription": "Add your best collaborations to attract future brands and partners!",
+    "addCollaborations": "Add collaborations"
+  },
+  "completeProfileCard": {
+    "title": "Complete Your Profile",
+    "description": "Complete a few missing steps to have a great profile"
+  },
+  "profileSettingsPage": {
+    "title": "Setting",
+    "viewPrivacyPolicy": "View Privacy Policy",
+    "contactSupport": "Contact Support",
+    "changePassword": "Change Password",
+    "pushNotification": "Push Notification",
+    "deliveryAddress": "Delivery Address",
+    "signOut": "Sign Out",
+    "deleteAccount": "Delete Account",
+    "confirmLogout": "Are you sure you want to sign out?",
+    "confirmDeleteAccount": "Are you sure you want to delete your account?",
+    "confirmDeleteAccountNote": "The account will no longer be available and all data will be permanently deleted."
+  },
+  "profileCollaborationPage": {
+    "title": "Collaborations",
+    "addNewBrand": "Add New Brand",
+    "deleteAlertTitle": "Are you sure?",
+    "deleteAlertDescription": "Do you really want to delete this brand from your collaboration list?"
+  },
+  "profileUpdatePage": {
+    "title": "Update Profile",
+    "changeProfilePhoto": "Change Profile Photo",
+    "aboutMyself": "About Myself",
+    "tags": "Tags",
+    "addNewTag": "Add New Tag"
+  },
+  "profileSocialMediaPage": {
+    "title": "Social Media",
+    "addNewSocialMedia": "Add New Social Media",
+    "deleteAlertTitle": "Are you sure?",
+    "deleteAlertDescription": "Do you really want to delete this social media from your list?",
+    "success": "Social media added successfully",
+    "deleteSuccess": "Social media deleted successfully"
+  },
+  "addSocialMediaBottomSheet": {
+    "title": "Add New Social Media",
+    "chooseSocialMedia": "Choose Social Media",
+    "addYourUsername": "Add your username",
+    "verifyTikTokDescription": "Please login with your TikTok so we know you own the account. This will not give Pregnopal access to post on your account.",
+    "verifyInstagramDescription": "Please send us a DM so we know you own the account.",
+    "verifyNoSupportDescription": "Please login with your {platform} so we know you own the account. This will not give Pregnopal access to post on your account.",
+    "verifyItsYou": "Verify it's you",
+    "pleaseVerify": "Please verify your {platform} account"
+  },
+
+  "profileContentMediaPage": {
+    "title": "Best Content",
+    "socialMedia": "Social Media",
+    "addNewPost": "Add New Post",
+    "deleteAlertTitle": "Are you sure?",
+    "deleteAlertDescription": "Do you really want to delete this post?"
+  },
+  "profileRatesPage": {
+    "title": "My Rates",
+    "addNewRate": "Add New Service",
+    "deleteAlertTitle": "Are you sure?",
+    "deleteAlertDescription": "Do you really want to delete this service?",
+    "serviceName": "Service Name",
+    "rate": "Rate",
+    "deleteThisService": "Delete this service"
+  },
+  "profileDeliveryInfoPage": {
+    "title": "Delivery Information",
+    "description": "Address is only used for sending you products and not made public",
+    "addNewAddress": "Add Address"
+  },
+  "chooseCountryPage": {
+    "title": "Choose Country"
+  },
+  "chooseStatePage": {
+    "title": "Choose State"
+  },
+  "chooseCityPage": {
+    "title": "Choose City"
+  },
+  "opportunitiesPage": {
+    "title": "Opportunities",
+    "noOpportunities": "No opportunities found"
+  },
+  "opportunitiesMapPage": {
+    "map": "Map",
+    "allOpportunitiesList": "All Opportunities List"
+  },
+  "opportunityDetailPage": {
+    "title": "Opportunity Detail",
+    "theOpportunity": "The Opportunity",
+    "theAsk": "The Ask",
+    "tagging": "Tagging",
+    "opportunityInstructions": "Opportunity Instructions",
+    "opportunityClaimDetailsQR": "Come to any of our branches any day and show your QR-code.",
+    "openQR": "Open QR Code",
+    "viewLocations": "View Claim Locations"
+  },
+  "opportunityQuestionsPage": {
+    "description": "This brand has some additional question before apply their campaign.",
+    "submittedSuccessfully": "Answers Submitted successfully"
+  },
+
+  "opportunityClaimQRBottomRoute": {
+    "title": "Your gift card"
+  }
+}
