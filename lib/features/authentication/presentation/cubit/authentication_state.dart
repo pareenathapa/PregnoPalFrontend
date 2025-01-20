@@ -13,6 +13,7 @@ class AuthenticationState with _$AuthenticationState {
     @Default(false) bool isLoginFormValid,
     @Default(false) bool isRegisterFormValid,
     @Default(false) bool isAgreed,
+    @Default("user") String selectedRole,
     AppErrorHandler? error,
     String? deviceToken,
     UserModel? user,

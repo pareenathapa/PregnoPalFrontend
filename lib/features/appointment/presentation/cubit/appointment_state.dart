@@ -7,12 +7,14 @@ class AppointmentState with _$AppointmentState {
   const factory AppointmentState({
     @Default(false) bool isLoading,
     AppErrorHandler? error,
-    dynamic allAppointments,
+    @Default([]) List<Map<String, dynamic>> allAppointments,
     dynamic appointmentDatesAndTimes,
     dynamic selectedAppointment,
     @Default(false) bool isAppointmentAdded,
     @Default(false) bool isAppointmentDeleted,
     @Default(false) bool isAppointmentUpdated,
+    @Default(false) bool isAppointmentRejected,
+    @Default(false) bool isAppointmentAccepted,
   }) = _AppointmentState;
 
   // Initial state

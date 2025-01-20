@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../core/connections/api/dio_service.dart';
 import '../../../../core/failure/error_handler.dart';
+import '../../../../di/main_di.dart';
 import '../../domain/usecase/add_appointment_usecase.dart';
 import '../../domain/usecase/delete_appointment_usecase.dart';
 import '../../domain/usecase/get_all_appointment_usecase.dart';
@@ -77,20 +79,23 @@ class AppointmentCubit extends Cubit<AppointmentState> {
             isLoading: false,
             error: null,
             selectedAppointment: success,
+            isAppointmentAdded: true,
           ),
         );
       },
     );
   }
 
-  Future<void> getAllAppointments() async {
+  Future<void> getAllAppointments({
+    String? status,
+  }) async {
     emit(
       state.copyWith(
         isLoading: true,
         error: null,
       ),
     );
-    final result = await _getAllAppointmentUsecase(null);
+    final result = await _getAllAppointmentUsecase(status);
     result.fold(
       (failure) {
         emit(
@@ -143,11 +148,13 @@ class AppointmentCubit extends Cubit<AppointmentState> {
 
   Future<void> updateAppointment({
     required String id,
-    required String parentId,
-    required String doctorId,
-    required String childId,
-    required DateTime appointmentDate,
-    required String mode,
+    String? description,
+    String? title,
+    String? doctorId,
+    String? childId,
+    DateTime? date,
+    DateTime? time,
+    String? mode,
     String? meetingLink,
   }) async {
     emit(
@@ -159,12 +166,14 @@ class AppointmentCubit extends Cubit<AppointmentState> {
     final result = await _updateAppointmentUsecase(
       UpdateAppointmentParams(
         id: id,
-        parentId: parentId,
+        description: description,
         doctorId: doctorId,
         childId: childId,
-        appointmentDate: appointmentDate,
+        date: date,
+        time: time,
         mode: mode,
         meetingLink: meetingLink,
+        title: title,
       ),
     );
     result.fold(
@@ -243,5 +252,90 @@ class AppointmentCubit extends Cubit<AppointmentState> {
         );
       },
     );
+  }
+
+  Future<void> rejectAppointment(String appointmentId) async {
+    final response = await locator<DioService>()
+        .dio
+        .post("/appointments/reject/$appointmentId");
+
+    if (response.statusCode == 201) {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          error: null,
+          isAppointmentRejected: true,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          error: AppErrorHandler(
+            message: "Failed to reject appointment",
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> acceptedAppointment(String appointmentId) async {
+    final response = await locator<DioService>()
+        .dio
+        .post("/appointments/accept/$appointmentId");
+
+    if (response.statusCode == 201) {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          error: null,
+          isAppointmentAccepted: true,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          error: AppErrorHandler(
+            message: "Failed to reject appointment",
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> counterAppointment({
+    required String appointmentId,
+    required String counterMode,
+    required DateTime counterDate,
+    required DateTime counterTime,
+  }) async {
+    final response = await locator<DioService>().dio.post(
+      "/appointments/counter/$appointmentId",
+      data: {
+        "counter_proposal_date": counterDate,
+        "counter_mode": counterMode,
+        "counter_proposal_time": counterTime,
+      },
+    );
+
+    if (response.statusCode == 201) {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          error: null,
+          isAppointmentUpdated: true,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          error: AppErrorHandler(
+            message: "Failed to reject appointment",
+          ),
+        ),
+      );
+    }
   }
 }

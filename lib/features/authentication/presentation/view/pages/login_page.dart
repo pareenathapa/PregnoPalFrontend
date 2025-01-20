@@ -74,7 +74,7 @@ class LoginPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   verticalMargin50 + verticalMargin16,
-                  // pregnopal Logo
+                  // Mifu Logo
                   Center(
                     child: Image.asset(
                       Assets.logo.path,

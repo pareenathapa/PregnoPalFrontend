@@ -13,6 +13,7 @@ import '../../../../core/themes/text_theme/app_text_styles.dart';
 import '../../../../core/utils/extensions/title_case_extension.dart';
 import '../../../../generated/assets.gen.dart';
 import '../../../../generated/locale_keys.g.dart';
+import '../../../home/presentation/view/home_view.dart';
 
 class AppointmentWidget extends StatelessWidget {
   const AppointmentWidget({
@@ -24,6 +25,8 @@ class AppointmentWidget extends StatelessWidget {
     this.date,
     this.status = 'pending',
     this.onTap,
+    this.isEditable = false,
+    this.onTapEdit,
   });
   final String appointmentId;
   final String? doctorImage;
@@ -32,6 +35,8 @@ class AppointmentWidget extends StatelessWidget {
   final String? date;
   final String status;
   final Function()? onTap;
+  final Function()? onTapEdit;
+  final bool isEditable;
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +128,25 @@ class AppointmentWidget extends StatelessWidget {
                           ),
                         ],
                       ),
+                      // Edit Button
+                      if (isEditable)
+                        GestureDetector(
+                          onTap: onTapEdit,
+                          child: Container(
+                            height: 28.h,
+                            width: 28.h,
+                            padding: horizontalPadding4 + verticalPadding2,
+                            decoration: const BoxDecoration(
+                              borderRadius: allRadius50,
+                              color: PrimitiveColors.statusLightPurple,
+                            ),
+                            child: Icon(
+                              Icons.edit,
+                              color: PrimitiveColors.statusPurple,
+                              size: 16.sp,
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ],

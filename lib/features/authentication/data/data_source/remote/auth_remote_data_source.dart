@@ -14,6 +14,10 @@ class AuthRemoteDataSource {
     required String name,
     required String email,
     required String password,
+    String? specialization,
+    required String role,
+    DateTime? availableFrom,
+    DateTime? availableTo,
   }) async {
     try {
       final response = await api.dio.post(
@@ -22,6 +26,12 @@ class AuthRemoteDataSource {
           'name': name,
           'email': email,
           'password': password,
+          'role': role,
+          if (specialization != null) 'specialization': specialization,
+          if (availableFrom != null)
+            'available_from': availableFrom.millisecondsSinceEpoch.toString(),
+          if (availableTo != null)
+            'available_to': availableTo.millisecondsSinceEpoch.toString(),
         },
       );
       return Right(response.data);

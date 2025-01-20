@@ -44,11 +44,19 @@ class AuthRepositoryImpl implements IAuthRepository {
     required String name,
     required String email,
     required String password,
+    required String role,
+    String? specialization,
+    DateTime? availableFrom,
+    DateTime? availableTo,
   }) async {
     return await remoteDataSource.registerUser(
       name: name,
       email: email,
       password: password,
+      role: role,
+      specialization: specialization,
+      availableFrom: availableFrom,
+      availableTo: availableTo,
     );
   }
 }

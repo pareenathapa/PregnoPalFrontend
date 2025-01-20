@@ -3,13 +3,20 @@ import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../../config/constants/size/app_size.dart';
 import '../../../../core/common/app_components/app_button.dart';
+import '../../../../core/common/app_status_chips.dart';
 import '../../../../core/connections/api/dio_service.dart';
+import '../../../../core/helper/date_time_formatter_string.dart';
+import '../../../../core/helper/url_launcher_helper.dart';
+import '../../../../core/themes/text_theme/all_text_styles.dart';
+import '../../../../core/utils/extensions/date_time_helper_extension.dart';
 import '../../../../di/main_di.dart';
+import '../../../appointment/presentation/cubit/appointment_cubit.dart';
 import '../../../appointment/presentation/widgets/appointment_widget.dart';
 
 @RoutePage(name: 'CalenderScreen')
@@ -127,20 +134,6 @@ class _CalenderViewState extends State<CalenderView> {
                       },
                     ),
                   );
-
-                  return Card(
-                    margin:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                    child: ListTile(
-                      title: Text(appointment['title']),
-                      subtitle: Text(
-                        'Time: ${appointment['time']} - Mode: ${appointment['mode']}',
-                      ),
-                      onTap: () {
-                        _showAppointmentDetails(appointment);
-                      },
-                    ),
-                  );
                 },
               ),
             ),
@@ -156,17 +149,176 @@ class _CalenderViewState extends State<CalenderView> {
       builder: (context) {
         return AlertDialog(
           title: const Text('Appointment Details'),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Doctor: ${appointment['doctor']}'),
-              Text('Child: ${appointment['child']}'),
-              Text('Date: ${appointment['date']}'),
-              Text('Time: ${appointment['time']}'),
-              Text('Mode: ${appointment['mode']}'),
-              Text('Status: ${appointment['status']}'),
-            ],
+          content: Padding(
+            padding: horizontalPadding16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Appointment Title
+                Center(
+                  child: Text(
+                    appointment['title'] ?? 'Apple',
+                    style: AllTextStyle.f20W6,
+                  ),
+                ),
+                verticalMargin24,
+                // Doctor Details
+                // Doctor Image + Name + specialization
+                Row(
+                  children: [
+                    // Doctor Image
+                    Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: Image.network(
+                          appointment['doctor']['picture'],
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    horizontalMargin12,
+                    // Doctor Name + specialization
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          appointment['doctor']['name'],
+                          style: AllTextStyle.f16W6,
+                        ),
+                        verticalMargin4,
+                        Text(
+                          appointment['doctor']['specialization'],
+                          style: AllTextStyle.f14W4,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                verticalMargin16,
+                // Appointment Status + Mode
+                Row(
+                  children: [
+                    StatusChips(label: appointment['status']),
+                    horizontalMargin8,
+                    StatusChips(label: appointment['mode']),
+                  ],
+                ),
+                verticalMargin16,
+                // If mode is online, show the link
+                if (appointment['mode'].toString().toLowerCase() == 'online')
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Meeting Link',
+                        style: AllTextStyle.f16W6,
+                      ),
+                      verticalMargin4,
+                      GestureDetector(
+                        onTap: () {
+                          locator<UrlLauncherHelper>().launchURL(
+                            appointment['meeting_link'],
+                          );
+                        },
+                        child: Text(
+                          "appointment['meeting_link']",
+                          style: AllTextStyle.f16W4.copyWith(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                verticalMargin16,
+                // Appointment Date + Time
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Appointment Date',
+                      style: AllTextStyle.f16W6,
+                    ),
+                    verticalMargin4,
+                    Text(
+                      appointment['date'],
+                      style: AllTextStyle.f16W4,
+                    ),
+                    verticalMargin16,
+                    Text(
+                      'Appointment Time',
+                      style: AllTextStyle.f16W6,
+                    ),
+                    verticalMargin4,
+                    Text(
+                      appointment['time'],
+                      style: AllTextStyle.f16W4,
+                    ),
+                  ],
+                ),
+                //  Child Details
+                verticalMargin16,
+                Text(
+                  'Child Details',
+                  style: AllTextStyle.f16W6,
+                ),
+                verticalMargin4,
+                Text(
+                  'Name: ${appointment['child']['name']}',
+                  style: AllTextStyle.f16W4,
+                ),
+                verticalMargin4,
+                Text(
+                  'Age: ${appointment['child']['sex']}',
+                  style: AllTextStyle.f16W4,
+                ),
+                verticalMargin4,
+
+                Text(
+                  'Height: ${appointment['child']['height']} cm',
+                  style: AllTextStyle.f16W4,
+                ),
+                verticalMargin4,
+                Text(
+                  'Weight: ${appointment['child']['weight']} kg',
+                  style: AllTextStyle.f16W4,
+                ),
+                verticalMargin4,
+                Text(
+                  'Weight: ${appointment['child']['weight']} kg',
+                  style: AllTextStyle.f16W4,
+                ),
+
+                Text(
+                  'DOB:  ${DateTime.parse(
+                    appointment['child']['date_of_birth'],
+                  ).formatDateTime(
+                    DateTimeFormatterString.dayMonthYear,
+                  )}',
+                  style: AllTextStyle.f16W4,
+                ),
+                verticalMargin4,
+
+                // Appointment Description
+                verticalMargin16,
+                Text(
+                  'Description',
+                  style: AllTextStyle.f16W6,
+                ),
+                verticalMargin4,
+                Text(
+                  appointment['description'],
+                  style: AllTextStyle.f16W4,
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(

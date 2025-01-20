@@ -54,4 +54,10 @@ class DateTimeFormatterString {
 
   /// Format for 24-hour time format (e.g., "15:30").
   static const String militaryTime = "HH:mm";
+
+  // Date and time combined
+
+  /// Format for an abbreviated day of the week, abbreviated month, and day of the month (e.g., "Thu Apr 23, 12:30 Am").
+
+  static const String abbreviatedDayMonthDayTimeFormat = "E MMM d, h:mm a";
 }

@@ -47,6 +47,8 @@ class _AppointmentViewState extends State<AppointmentView> {
   final _childController = TextEditingController();
   final _childIdController = TextEditingController();
   final _descriptionController = TextEditingController();
+  DateTime time = DateTime.now();
+  DateTime date = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +59,21 @@ class _AppointmentViewState extends State<AppointmentView> {
             message: state.error!.message,
             isError: true,
           );
+        }
+        if (state.isAppointmentAdded) {
+          context.showSnackBar(
+            message: "Appointment Added Successfully",
+          );
+          // Clear all fields after successful appointment
+          _titleController.clear();
+          _doctorNameController.clear();
+          _doctorIdController.clear();
+          _dateController.clear();
+          _timeController.clear();
+          _modeController.clear();
+          _childController.clear();
+          _childIdController.clear();
+          _descriptionController.clear();
         }
       },
       child: Scaffold(
@@ -161,6 +178,8 @@ class _AppointmentViewState extends State<AppointmentView> {
           lastDate: DateTime.now().add(const Duration(days: 30)),
         );
         if (selectedDate != null) {
+          date = selectedDate;
+          setState(() {});
           _dateController.text = selectedDate
               .formatDateTime(DateTimeFormatterString.monthDayYearUS);
         }
@@ -181,6 +200,14 @@ class _AppointmentViewState extends State<AppointmentView> {
           initialTime: TimeOfDay.now(),
         );
         if (selectedTime != null) {
+          time = DateTime(
+            date.year,
+            date.month,
+            date.day,
+            selectedTime.hour,
+            selectedTime.minute,
+          );
+          setState(() {});
           _timeController.text = selectedTime.format(context);
         }
       },
@@ -263,24 +290,70 @@ class _AppointmentViewState extends State<AppointmentView> {
   }
 
   void _onConfirm() {
-    final appointmentDate = DateTime(
-      int.parse(_dateController.text.split('/')[2]),
-      int.parse(_dateController.text.split('/')[0]),
-      int.parse(_dateController.text.split('/')[1]),
-      int.parse(_timeController.text.split(':')[0]),
-      int.parse(_timeController.text.split(':')[1]),
-    );
+    try {
+      DateTime? appointmentDateTime;
 
-    context.read<AppointmentCubit>().addAppointment(
-          doctorId: _doctorIdController.text,
-          date: appointmentDate,
-          time: appointmentDate,
-          title: _titleController.text,
-          mode: _modeController.text,
-          meetingLink: "hello",
-          childId: _childIdController.text,
-          description: _descriptionController.text,
+      // Validate and parse date if not empty
+      if (_dateController.text.isNotEmpty) {
+        final dateParts = _dateController.text.split('/');
+        if (dateParts.length != 3 ||
+            dateParts.any((part) => int.tryParse(part) == null)) {
+          throw FormatException('Invalid date format');
+        }
+        final appointmentDate = DateTime(
+          int.parse(dateParts[2]),
+          int.parse(dateParts[0]),
+          int.parse(dateParts[1]),
         );
+
+        // Validate and parse time if not empty
+        if (_timeController.text.isNotEmpty) {
+          final timeParts = _timeController.text.split(':');
+          if (timeParts.length != 2 ||
+              timeParts.any((part) => int.tryParse(part) == null)) {
+            throw FormatException('Invalid time format');
+          }
+          final appointmentTime = TimeOfDay(
+            hour: int.parse(timeParts[0]),
+            minute: int.parse(timeParts[1]),
+          );
+
+          // Combine date and time into a DateTime object
+          appointmentDateTime = DateTime(
+            date.year,
+            date.month,
+            date.day,
+            time.hour,
+            time.minute,
+          );
+        } else {
+          appointmentDateTime = appointmentDate;
+        }
+      }
+
+      log(
+        'Doctor ID: ${_doctorIdController.text}\n'
+        'Date: $appointmentDateTime\n'
+        'Time: $appointmentDateTime\n'
+        'Title: ${_titleController.text}\n'
+        'Mode: ${_modeController.text}\n'
+        'Child ID: ${_childIdController.text}\n'
+        'Description: ${_descriptionController.text}',
+      );
+      context.read<AppointmentCubit>().addAppointment(
+            doctorId: _doctorIdController.text,
+            date: appointmentDateTime!,
+            time: appointmentDateTime!,
+            title: _titleController.text,
+            mode: _modeController.text,
+            meetingLink: "hello",
+            childId: _childIdController.text,
+            description: _descriptionController.text,
+          );
+    } catch (e) {
+      // Handle errors and show appropriate messages
+      context.showSnackBar(message: e.toString(), isError: true);
+    }
   }
 
   @override

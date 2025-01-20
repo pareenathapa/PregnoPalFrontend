@@ -215,7 +215,7 @@ abstract class  LocaleKeys {
   static const campaignEmptyListWidget_emptyCampaignDescription = 'campaignEmptyListWidget.emptyCampaignDescription';
   static const campaignEmptyListWidget_emptyInvitationDescription = 'campaignEmptyListWidget.emptyInvitationDescription';
   static const campaignEmptyListWidget = 'campaignEmptyListWidget';
-  static const balanceCardWidget_pregnopal_balance = 'balanceCardWidget.pregnopal_balance';
+  static const balanceCardWidget_mifu_balance = 'balanceCardWidget.mifu_balance';
   static const balanceCardWidget = 'balanceCardWidget';
   static const homeSpotlightInfluencersWidget_title = 'homeSpotlightInfluencersWidget.title';
   static const homeSpotlightInfluencersWidget = 'homeSpotlightInfluencersWidget';

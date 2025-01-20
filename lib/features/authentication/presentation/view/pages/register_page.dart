@@ -15,7 +15,10 @@ import '../../../../../../core/utils/extensions/form_validator_extension.dart';
 import '../../../../../../core/utils/extensions/snackbar_extension.dart';
 import '../../../../../../di/main_di.dart';
 import '../../../../../config/routes/route_paths.dart';
+import '../../../../../core/helper/date_time_formatter_string.dart';
+import '../../../../../core/utils/extensions/date_time_helper_extension.dart';
 import '../../../../../generated/assets.gen.dart';
+import '../../../../appointment/presentation/view/appointment_detail_page.dart';
 import '../../cubit/authentication_cubit.dart';
 
 @RoutePage()
@@ -38,12 +41,31 @@ class RegisterPage extends StatelessWidget {
     text: "@ppleWas123",
   );
 
+  final TextEditingController specializationController =
+      TextEditingController();
+  DateTime availableFromController = DateTime.now();
+  DateTime availableToController = DateTime.now();
+  final TextEditingController availableFromTextController =
+      TextEditingController(
+    text: DateTime.now().formatDateTime(
+      DateTimeFormatterString.abbreviatedDayMonthDayTimeFormat,
+    ),
+  );
+  final TextEditingController availableToTextController = TextEditingController(
+    text: DateTime.now().formatDateTime(
+      DateTimeFormatterString.abbreviatedDayMonthDayTimeFormat,
+    ),
+  );
+
   void _textFieldChanged(BuildContext context) {
     context.read<AuthenticationCubit>().validateRegisterForm(
           email: emailController.text,
           password: passwordController.text,
           confirmPassword: confirmPasswordController.text,
           name: fullName.text,
+          availableFrom: availableFromController,
+          availableTo: availableToController,
+          specialization: specializationController.text,
         );
   }
 
@@ -53,6 +75,9 @@ class RegisterPage extends StatelessWidget {
             email: emailController.text,
             password: passwordController.text,
             name: fullName.text,
+            specialization: specializationController.text,
+            availableFrom: availableFromController,
+            availableTo: availableToController,
           );
     }
   }
@@ -84,7 +109,7 @@ class RegisterPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   verticalMargin50 + verticalMargin16,
-                  //  Logo
+                  // Mifu Logo
                   Center(
                     child: Image.asset(
                       Assets.logo.path,
@@ -107,6 +132,84 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ),
                   verticalMargin32,
+                  // Switch to Doctor
+                  Row(
+                    children: [
+                      // Switch to Doctor
+                      InkWell(
+                        onTap: () {
+                          context.read<AuthenticationCubit>().selectRole(
+                                role: "doctor",
+                              );
+                          context
+                              .read<AuthenticationCubit>()
+                              .validateRegisterForm(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                confirmPassword: confirmPasswordController.text,
+                                name: fullName.text,
+                              );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: state.selectedRole == "doctor"
+                                ? PrimitiveColors.primary
+                                : PrimitiveColors.lightGrey,
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: AppText(
+                            "Doctor",
+                            style: AllTextStyle.f14W5.copyWith(
+                              color: state.selectedRole == "doctor"
+                                  ? Colors.white
+                                  : PrimitiveColors.grayG600,
+                            ),
+                          ),
+                        ),
+                      ),
+                      horizontalMargin8,
+                      // Switch to User
+                      InkWell(
+                        onTap: () {
+                          context.read<AuthenticationCubit>().selectRole(
+                                role: "user",
+                              );
+                          context
+                              .read<AuthenticationCubit>()
+                              .validateRegisterForm(
+                                email: emailController.text,
+                                password: passwordController.text,
+                                confirmPassword: confirmPasswordController.text,
+                                name: fullName.text,
+                              );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 8.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: state.selectedRole == "user"
+                                ? PrimitiveColors.primary
+                                : PrimitiveColors.lightGrey,
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: AppText(
+                            "User",
+                            style: AllTextStyle.f14W5.copyWith(
+                              color: state.selectedRole == "user"
+                                  ? Colors.white
+                                  : PrimitiveColors.grayG600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   // Form Fields for Email and Password
                   Form(
                     key: formKey,
@@ -189,6 +292,130 @@ class RegisterPage extends StatelessWidget {
                             );
                           },
                         ),
+                        if (state.selectedRole == "doctor")
+                          // Specialization Field
+                          Column(
+                            children: [
+                              verticalMargin12,
+                              KTextFormField(
+                                controller: specializationController,
+                                hintText: "Specialization",
+                                titleText: "Specialization",
+                                validator: (value) {
+                                  final result = value!.validateNotEmpty(
+                                    "Specialization",
+                                  );
+                                  return result.fold(
+                                    (error) => error,
+                                    (success) => null,
+                                  );
+                                },
+                                onChanged: (value) {
+                                  _textFieldChanged(context);
+                                },
+                              ),
+                              verticalMargin12,
+                              // Available From Field (Date Time Picker)
+                              KTextFormField(
+                                controller: availableFromTextController,
+                                hintText: "Available From",
+                                titleText: "Available From",
+                                validator: (value) {
+                                  final result = value!.validateNotEmpty(
+                                    "Available From",
+                                  );
+                                  return result.fold(
+                                    (error) => error,
+                                    (success) => null,
+                                  );
+                                },
+                                onChanged: (value) {
+                                  availableFromTextController.text = value!;
+                                  _textFieldChanged(context);
+                                },
+                                onTap: () async {
+                                  // show both date and time picker
+                                  final date = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime.now(),
+                                    lastDate: DateTime(2100),
+                                  );
+
+                                  final time = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                  );
+
+                                  if (date != null && time != null) {
+                                    availableFromController = DateTime(
+                                      date.year,
+                                      date.month,
+                                      date.day,
+                                      time.hour,
+                                      time.minute,
+                                    );
+                                    availableFromTextController.text =
+                                        availableFromController.formatDateTime(
+                                      DateTimeFormatterString
+                                          .abbreviatedDayMonthDayTimeFormat,
+                                    );
+                                    _textFieldChanged(context);
+                                  }
+                                },
+                              ),
+                              verticalMargin12,
+                              // Available To Field (Date Time Picker)
+                              KTextFormField(
+                                controller: availableToTextController,
+                                hintText: "Available To",
+                                titleText: "Available To",
+                                validator: (value) {
+                                  final result = value!.validateNotEmpty(
+                                    "Available To",
+                                  );
+                                  return result.fold(
+                                    (error) => error,
+                                    (success) => null,
+                                  );
+                                },
+                                onChanged: (value) {
+                                  availableToTextController.text = value!;
+                                  _textFieldChanged(context);
+                                },
+                                onTap: () async {
+                                  // show both date and time picker
+                                  final date = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: availableFromController,
+                                    lastDate: DateTime(2100),
+                                  );
+
+                                  final time = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                  );
+
+                                  if (date != null && time != null) {
+                                    availableToController = DateTime(
+                                      date.year,
+                                      date.month,
+                                      date.day,
+                                      time.hour,
+                                      time.minute,
+                                    );
+                                    availableToTextController.text =
+                                        availableToController.formatDateTime(
+                                      DateTimeFormatterString
+                                          .abbreviatedDayMonthDayTimeFormat,
+                                    );
+                                    _textFieldChanged(context);
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                   ),
@@ -230,7 +457,6 @@ class RegisterPage extends StatelessWidget {
                     },
                     label: "Sign Up",
                     isLoading: state.isLoading,
-                    isDisabled: !state.isRegisterFormValid,
                   ),
                   verticalMargin8,
                   // Don't have an account? Register

@@ -4,7 +4,7 @@ class ApiEndpoints {
   static const Duration receiveTimeout = Duration(seconds: 30);
 
   static String baseDomain = dotenv.env['API_URL'] ?? "";
-  static const String socketURL = "http://192.168.1.136:3002";
+  static const String socketURL = "http://192.168.1.254:3002";
   static String baseAPIURL = dotenv.env['API_BASE_URL'] ?? "";
 
   // Endpoints

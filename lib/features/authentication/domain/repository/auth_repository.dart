@@ -7,6 +7,10 @@ abstract class IAuthRepository {
     required String name,
     required String email,
     required String password,
+    required String role,
+    String? specialization,
+    DateTime? availableFrom,
+    DateTime? availableTo,
   });
 
   Future<Either<AppErrorHandler, UserModel>> loginUser({

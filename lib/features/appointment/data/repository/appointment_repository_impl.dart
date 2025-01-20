@@ -42,8 +42,13 @@ class AppointmentRepositoryImpl implements IAppointmentRepository {
   }
 
   @override
-  Future<Either<AppErrorHandler, dynamic>> getAllAppointments() {
-    return remoteDataSource.getAllAppointments();
+  Future<Either<AppErrorHandler, List<Map<String, dynamic>>>>
+      getAllAppointments({
+    String? status,
+  }) {
+    return remoteDataSource.getAllAppointments(
+      status: status,
+    );
   }
 
   @override
@@ -58,22 +63,28 @@ class AppointmentRepositoryImpl implements IAppointmentRepository {
   }
 
   @override
-  Future<Either<AppErrorHandler, dynamic>> updateAppointment(
-      {required String id,
-      required String parentId,
-      required String doctorId,
-      required String childId,
-      required DateTime appointmentDate,
-      required String mode,
-      String? meetingLink}) {
+  Future<Either<AppErrorHandler, dynamic>> updateAppointment({
+    required String id,
+    String? meetingLink,
+    String? mode,
+    String? title,
+    String? description,
+    String? doctorId,
+    String? childId,
+    DateTime? date,
+    DateTime? time,
+  }) {
     return remoteDataSource.updateAppointment(
       id: id,
-      parentId: parentId,
+      meetingLink: meetingLink,
+      mode: mode,
+      title: title,
+      description: description,
       doctorId: doctorId,
       childId: childId,
-      appointmentDate: appointmentDate,
-      mode: mode,
-      meetingLink: meetingLink,
+      date: date,
+      time: time,
+      
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/widgets.dart';
+
 import '../../../../config/constants/api/api_endpoints_constants.dart';
 
 class UserModel {
@@ -10,6 +12,10 @@ class UserModel {
   final DateTime updatedAt;
   final String token;
   final String picture;
+  final DateTime? availableFrom;
+  final DateTime? availableTo;
+  final String? specialization;
+  final String role;
   UserModel({
     required this.id,
     required this.name,
@@ -18,6 +24,10 @@ class UserModel {
     required this.updatedAt,
     required this.token,
     required this.picture,
+    this.availableFrom,
+    this.availableTo,
+    this.specialization,
+    required this.role,
   });
 
   UserModel copyWith({
@@ -28,6 +38,10 @@ class UserModel {
     DateTime? updatedAt,
     String? token,
     String? picture,
+    ValueGetter<DateTime?>? availableFrom,
+    ValueGetter<DateTime?>? availableTo,
+    ValueGetter<String?>? specialization,
+    String? role,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -37,18 +51,28 @@ class UserModel {
       updatedAt: updatedAt ?? this.updatedAt,
       token: token ?? this.token,
       picture: picture ?? this.picture,
+      availableFrom:
+          availableFrom != null ? availableFrom() : this.availableFrom,
+      availableTo: availableTo != null ? availableTo() : this.availableTo,
+      specialization:
+          specialization != null ? specialization() : this.specialization,
+      role: role ?? this.role,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      '_id': id,
+      'id': id,
       'name': name,
       'email': email,
       'created_at': createdAt.millisecondsSinceEpoch,
       'updated_at': updatedAt.millisecondsSinceEpoch,
       'token': token,
       'picture': picture,
+      'available_from': availableFrom?.millisecondsSinceEpoch,
+      'available_to': availableTo?.millisecondsSinceEpoch,
+      'specialization': specialization,
+      'role': role,
     };
   }
 
@@ -57,12 +81,20 @@ class UserModel {
       id: map['_id'] ?? '',
       name: map['name'] ?? '',
       email: map['email'] ?? '',
-      createdAt: DateTime.parse(map['created_at']),
-      updatedAt: DateTime.parse(map['updated_at']),
+      createdAt: DateTime.fromMillisecondsSinceEpoch(map['created_at']),
+      updatedAt: DateTime.fromMillisecondsSinceEpoch(map['updated_at']),
       token: map['token'] ?? '',
       picture: map["picture"].toString().startsWith("/uploads")
           ? "${ApiEndpoints.baseDomain}${map["picture"]}"
           : map["picture"],
+      availableFrom: map['available_from'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['available_from'])
+          : null,
+      availableTo: map['available_to'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['available_to'])
+          : null,
+      specialization: map['specialization'],
+      role: map['role'] ?? '',
     );
   }
 
@@ -73,7 +105,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, email: $email, createdAt: $createdAt, updatedAt: $updatedAt, token: $token, picture: $picture)';
+    return 'UserModel(id: $id, name: $name, email: $email, createdAt: $createdAt, updatedAt: $updatedAt, token: $token, picture: $picture, availableFrom: $availableFrom, availableTo: $availableTo, specialization: $specialization, role: $role)';
   }
 
   @override
@@ -87,7 +119,11 @@ class UserModel {
         other.createdAt == createdAt &&
         other.updatedAt == updatedAt &&
         other.token == token &&
-        other.picture == picture;
+        other.picture == picture &&
+        other.availableFrom == availableFrom &&
+        other.availableTo == availableTo &&
+        other.specialization == specialization &&
+        other.role == role;
   }
 
   @override
@@ -98,6 +134,10 @@ class UserModel {
         createdAt.hashCode ^
         updatedAt.hashCode ^
         token.hashCode ^
-        picture.hashCode;
+        picture.hashCode ^
+        availableFrom.hashCode ^
+        availableTo.hashCode ^
+        specialization.hashCode ^
+        role.hashCode;
   }
 }

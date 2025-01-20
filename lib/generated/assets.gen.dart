@@ -94,6 +94,16 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [pp, test];
 }
 
+class $AssetsTranslationsGen {
+  const $AssetsTranslationsGen();
+
+  /// File path: assets/translations/en-GB.json
+  String get enGB => 'assets/translations/en-GB.json';
+
+  /// List of all assets
+  List<String> get values => [enGB];
+}
+
 class Assets {
   Assets._();
 
@@ -101,6 +111,7 @@ class Assets {
   static const $AssetsIconGen icon = $AssetsIconGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const AssetGenImage logo = AssetGenImage('assets/logo.png');
+  static const $AssetsTranslationsGen translations = $AssetsTranslationsGen();
   static const String local = 'local.env';
 
   /// List of all assets

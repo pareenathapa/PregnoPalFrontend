@@ -88,22 +88,6 @@ FutureOr<void> bootstrap({
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
-    // Local notification initialization
-    final LocalNotificationServices localNotificationServices =
-        LocalNotificationServices(
-      flutterLocalNotificationsPlugin: FlutterLocalNotificationsPlugin(),
-    );
-    final NotificationServices notificationServices = NotificationServices(
-      localNotificationServices: localNotificationServices,
-      messaging: FirebaseMessaging.instance,
-    );
-
-    notificationServices.requestNotificationPermission();
-    notificationServices.firebaseInit();
-
-    SocketService().initializeSocket();
 
     // Main app dependency injection container initialization
     MainDI().register();

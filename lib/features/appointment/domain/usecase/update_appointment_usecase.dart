@@ -18,32 +18,38 @@ class UpdateAppointmentUsecase
   ) async {
     return await repository.updateAppointment(
       id: params.id,
-      parentId: params.parentId,
+      description: params.description,
       doctorId: params.doctorId,
       childId: params.childId,
-      appointmentDate: params.appointmentDate,
       mode: params.mode,
       meetingLink: params.meetingLink,
+      date: params.date,
+      time: params.time,
+      title: params.title,
     );
   }
 }
 
 class UpdateAppointmentParams {
   final String id;
-  final String parentId;
-  final String doctorId;
-  final String childId;
-  final DateTime appointmentDate;
-  final String mode;
+  final String? description;
+  final String? doctorId;
+  final String? childId;
+  final DateTime? date;
+  final String? mode;
   final String? meetingLink;
+  final String? title;
+  final DateTime? time;
 
   UpdateAppointmentParams({
     required this.id,
-    required this.parentId,
-    required this.doctorId,
-    required this.childId,
-    required this.appointmentDate,
-    required this.mode,
+    this.doctorId,
+    this.childId,
+    this.mode,
     this.meetingLink,
+    this.date,
+    this.time,
+    this.title,
+    this.description,
   });
 }

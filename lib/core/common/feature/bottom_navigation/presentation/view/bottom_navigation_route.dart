@@ -13,7 +13,7 @@ final bottomNavigationRoute = AutoRoute(
     AutoRoute(page: HomeScreen.page),
     AutoRoute(page: CalenderScreen.page),
     AutoRoute(page: AppointmentScreen.page),
-    AutoRoute(page: NotificationScreen.page),
+    AutoRoute(page: HistoryScreen.page),
     AutoRoute(page: ArticlesScreen.page),
   ],
 );

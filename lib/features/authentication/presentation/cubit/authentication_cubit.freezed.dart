@@ -24,6 +24,7 @@ mixin _$AuthenticationState {
   bool get isLoginFormValid => throw _privateConstructorUsedError;
   bool get isRegisterFormValid => throw _privateConstructorUsedError;
   bool get isAgreed => throw _privateConstructorUsedError;
+  String get selectedRole => throw _privateConstructorUsedError;
   AppErrorHandler? get error => throw _privateConstructorUsedError;
   String? get deviceToken => throw _privateConstructorUsedError;
   UserModel? get user => throw _privateConstructorUsedError;
@@ -50,6 +51,7 @@ abstract class $AuthenticationStateCopyWith<$Res> {
       bool isLoginFormValid,
       bool isRegisterFormValid,
       bool isAgreed,
+      String selectedRole,
       AppErrorHandler? error,
       String? deviceToken,
       UserModel? user});
@@ -80,6 +82,7 @@ class _$AuthenticationStateCopyWithImpl<$Res, $Val extends AuthenticationState>
     Object? isLoginFormValid = null,
     Object? isRegisterFormValid = null,
     Object? isAgreed = null,
+    Object? selectedRole = null,
     Object? error = freezed,
     Object? deviceToken = freezed,
     Object? user = freezed,
@@ -117,6 +120,10 @@ class _$AuthenticationStateCopyWithImpl<$Res, $Val extends AuthenticationState>
           ? _value.isAgreed
           : isAgreed // ignore: cast_nullable_to_non_nullable
               as bool,
+      selectedRole: null == selectedRole
+          ? _value.selectedRole
+          : selectedRole // ignore: cast_nullable_to_non_nullable
+              as String,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -164,6 +171,7 @@ abstract class _$$AuthenticationStateImplCopyWith<$Res>
       bool isLoginFormValid,
       bool isRegisterFormValid,
       bool isAgreed,
+      String selectedRole,
       AppErrorHandler? error,
       String? deviceToken,
       UserModel? user});
@@ -193,6 +201,7 @@ class __$$AuthenticationStateImplCopyWithImpl<$Res>
     Object? isLoginFormValid = null,
     Object? isRegisterFormValid = null,
     Object? isAgreed = null,
+    Object? selectedRole = null,
     Object? error = freezed,
     Object? deviceToken = freezed,
     Object? user = freezed,
@@ -230,6 +239,10 @@ class __$$AuthenticationStateImplCopyWithImpl<$Res>
           ? _value.isAgreed
           : isAgreed // ignore: cast_nullable_to_non_nullable
               as bool,
+      selectedRole: null == selectedRole
+          ? _value.selectedRole
+          : selectedRole // ignore: cast_nullable_to_non_nullable
+              as String,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -258,6 +271,7 @@ class _$AuthenticationStateImpl extends _AuthenticationState {
       this.isLoginFormValid = false,
       this.isRegisterFormValid = false,
       this.isAgreed = false,
+      this.selectedRole = "user",
       this.error,
       this.deviceToken,
       this.user})
@@ -288,6 +302,9 @@ class _$AuthenticationStateImpl extends _AuthenticationState {
   @JsonKey()
   final bool isAgreed;
   @override
+  @JsonKey()
+  final String selectedRole;
+  @override
   final AppErrorHandler? error;
   @override
   final String? deviceToken;
@@ -296,7 +313,7 @@ class _$AuthenticationStateImpl extends _AuthenticationState {
 
   @override
   String toString() {
-    return 'AuthenticationState(loginCheckSuccess: $loginCheckSuccess, isLoading: $isLoading, isLoggedIn: $isLoggedIn, isLoggedOut: $isLoggedOut, isRegisterSuccess: $isRegisterSuccess, isLoginFormValid: $isLoginFormValid, isRegisterFormValid: $isRegisterFormValid, isAgreed: $isAgreed, error: $error, deviceToken: $deviceToken, user: $user)';
+    return 'AuthenticationState(loginCheckSuccess: $loginCheckSuccess, isLoading: $isLoading, isLoggedIn: $isLoggedIn, isLoggedOut: $isLoggedOut, isRegisterSuccess: $isRegisterSuccess, isLoginFormValid: $isLoginFormValid, isRegisterFormValid: $isRegisterFormValid, isAgreed: $isAgreed, selectedRole: $selectedRole, error: $error, deviceToken: $deviceToken, user: $user)';
   }
 
   @override
@@ -320,6 +337,8 @@ class _$AuthenticationStateImpl extends _AuthenticationState {
                 other.isRegisterFormValid == isRegisterFormValid) &&
             (identical(other.isAgreed, isAgreed) ||
                 other.isAgreed == isAgreed) &&
+            (identical(other.selectedRole, selectedRole) ||
+                other.selectedRole == selectedRole) &&
             (identical(other.error, error) || other.error == error) &&
             (identical(other.deviceToken, deviceToken) ||
                 other.deviceToken == deviceToken) &&
@@ -337,6 +356,7 @@ class _$AuthenticationStateImpl extends _AuthenticationState {
       isLoginFormValid,
       isRegisterFormValid,
       isAgreed,
+      selectedRole,
       error,
       deviceToken,
       user);
@@ -361,6 +381,7 @@ abstract class _AuthenticationState extends AuthenticationState {
       final bool isLoginFormValid,
       final bool isRegisterFormValid,
       final bool isAgreed,
+      final String selectedRole,
       final AppErrorHandler? error,
       final String? deviceToken,
       final UserModel? user}) = _$AuthenticationStateImpl;
@@ -382,6 +403,8 @@ abstract class _AuthenticationState extends AuthenticationState {
   bool get isRegisterFormValid;
   @override
   bool get isAgreed;
+  @override
+  String get selectedRole;
   @override
   AppErrorHandler? get error;
   @override

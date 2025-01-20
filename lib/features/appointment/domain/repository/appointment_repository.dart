@@ -3,7 +3,10 @@ import 'package:fpdart/fpdart.dart';
 import '../../../../core/failure/error_handler.dart';
 
 abstract class IAppointmentRepository {
-  Future<Either<AppErrorHandler, dynamic>> getAllAppointments();
+  Future<Either<AppErrorHandler, List<Map<String, dynamic>>>>
+      getAllAppointments({
+    String? status,
+  });
 
   Future<Either<AppErrorHandler, dynamic>> getSingleAppointment({
     required String id,
@@ -21,13 +24,15 @@ abstract class IAppointmentRepository {
   });
 
   Future<Either<AppErrorHandler, dynamic>> updateAppointment({
-    required String id,
-    required String parentId,
-    required String doctorId,
-    required String childId,
-    required DateTime appointmentDate,
-    required String mode,
     String? meetingLink,
+    String? mode,
+    String? title,
+    String? description,
+    String? doctorId,
+    String? childId,
+    DateTime? date,
+    DateTime? time,
+    required String id,
   });
 
   Future<Either<AppErrorHandler, dynamic>> deleteAppointment({

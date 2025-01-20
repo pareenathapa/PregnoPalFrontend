@@ -67,6 +67,9 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     required String email,
     required String password,
     required String name,
+    String? specialization,
+    DateTime? availableFrom,
+    DateTime? availableTo,
   }) async {
     emit(
       state.copyWith(
@@ -75,7 +78,15 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       ),
     );
     final result = await _registerUsecase(
-      RegisterParams(email: email, password: password, name: name),
+      RegisterParams(
+        email: email,
+        password: password,
+        name: name,
+        role: state.selectedRole,
+        specialization: specialization,
+        availableFrom: availableFrom,
+        availableTo: availableTo,
+      ),
     );
 
     log(result.toString());
@@ -137,11 +148,24 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     );
   }
 
+  void selectRole({
+    required String role,
+  }) {
+    emit(
+      state.copyWith(
+        selectedRole: role,
+      ),
+    );
+  }
+
   void validateRegisterForm({
     required String email,
     required String password,
     required String name,
     required String confirmPassword,
+    String? specialization,
+    DateTime? availableFrom,
+    DateTime? availableTo,
   }) {
     final emailValidation = email.validateEmail();
     final passwordValidation = password.validatePassword();
@@ -149,6 +173,22 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     final confirmPasswordValidation = confirmPassword.validateConfirmPassword(
       password,
     );
+    if (state.selectedRole == 'doctor') {
+      final specializationValidation = specialization!.validateNotEmpty(
+        "Specialization",
+      );
+      emit(
+        state.copyWith(
+          isRegisterFormValid: emailValidation.isRight() &&
+              passwordValidation.isRight() &&
+              nameValidation.isRight() &&
+              confirmPasswordValidation.isRight() &&
+              specializationValidation.isRight() &&
+              state.isAgreed,
+        ),
+      );
+      return;
+    }
     emit(
       state.copyWith(
         isRegisterFormValid: emailValidation.isRight() &&

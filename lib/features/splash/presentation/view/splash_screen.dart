@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/routes/route_paths.dart';
 import '../../../../core/common/app_components/app_text.dart';
 import '../../../../core/service/navigation_service.dart';
+import '../../../../core/service/socket_service.dart';
 import '../../../../core/utils/extensions/snackbar_extension.dart';
 import '../../../../di/main_di.dart';
 import '../../../profile/presentation/cubit/profile_detail_cubit.dart';
@@ -26,6 +27,10 @@ class SplashScreen extends StatelessWidget implements AutoRouteWrapper {
         }
 
         if (state.profileData != null) {
+          SocketService(
+            loggedUser: state.profileData!.user,
+          ).initializeSocket();
+
           locator<NavigationService>()
               .replaceNamed(AppRoutePaths.bottomNavWrapper());
         }

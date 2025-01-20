@@ -1,5 +1,5 @@
 {
-  "appName": "Mifu",
+  "appName": "Pregnopal",
   "welcome": "Welcome!",
   "commonErrors": {
     "serverError": "Server error",
@@ -148,7 +148,7 @@
   },
   "onboardingPage": {
     "letsStart": "Let's Start",
-    "onboarding1Title": "Welcome to Mifu",
+    "onboarding1Title": "Welcome to Pregnopal",
     "onboarding1Description": "Join a community of creators and connect with top brands ",
     "onboarding2Title": "Opportunities",
     "onboarding2Description": "Get exclusive access to the hottest experiences, products and services. All for free.",
@@ -156,7 +156,7 @@
     "onboarding3Description": "Receive offers, manage your collaborations and get paid."
   },
   "joinPage": {
-    "title": "Join To Mifu!",
+    "title": "Join To Pregnopal!",
     "description": "Choose how you want to sign up your account.",
     "continueWith": "Continue with {type}"
   },
@@ -166,9 +166,9 @@
   },
   "askVerifyPage": {
     "linkYourAccount": "Link Your Account",
-    "tiktokDescription": "Please login with your TikTok so we know you own the account. This will not give Mifu access to post on your account.",
+    "tiktokDescription": "Please login with your TikTok so we know you own the account. This will not give Pregnopal access to post on your account.",
     "instagramTitle": "Drop us a DM",
-    "instagramDescription": "So we know you own @{username}, please DM @mifu.verify the code",
+    "instagramDescription": "So we know you own @{username}, please DM @pregnopal.verify the code",
     "verifiedTikTokTitle": "You are Verified on TikTok",
     "verifiedInstagramTitle": "You are Verified on Instagram",
     "verifiedDescription": "Success! You’re all set to enjoy all features with your verified status."
@@ -189,7 +189,7 @@
     "signIn": "Sign in"
   },
   "registerPage": {
-    "welcome": "Create Mifu Account",
+    "welcome": "Create Pregnopal Account",
     "description": "Sign up to start using our application",
     "alreadyHaveAccount": "Already have an account?",
     "signUp": "Sign up",
@@ -204,7 +204,7 @@
   },
   "socialMediaConnectionPage": {
     "title": "Add Your Social Media Accounts",
-    "description": "Link the platforms where you create content to start collaborating with Mifu Brands. Don't worry, you can add more in your profile later!",
+    "description": "Link the platforms where you create content to start collaborating with Pregnopal Brands. Don't worry, you can add more in your profile later!",
     "errors": {
       "noSocialMediaEntered": "Please enter at least one social media"
     },
@@ -245,7 +245,7 @@
     "emptyInvitationDescription": "You haven't got any invitations from brands yet"
   },
   "balanceCardWidget": {
-    "mifu_balance": "My MIFU Earnings"
+    "pregnopal_balance": "My PREGNOPAL Earnings"
   },
   "homeSpotlightInfluencersWidget": {
     "title": "Spotlight Creators"
@@ -360,9 +360,9 @@
     "title": "Add New Social Media",
     "chooseSocialMedia": "Choose Social Media",
     "addYourUsername": "Add your username",
-    "verifyTikTokDescription": "Please login with your TikTok so we know you own the account. This will not give Mifu access to post on your account.",
+    "verifyTikTokDescription": "Please login with your TikTok so we know you own the account. This will not give Pregnopal access to post on your account.",
     "verifyInstagramDescription": "Please send us a DM so we know you own the account.",
-    "verifyNoSupportDescription": "Please login with your {platform} so we know you own the account. This will not give Mifu access to post on your account.",
+    "verifyNoSupportDescription": "Please login with your {platform} so we know you own the account. This will not give Pregnopal access to post on your account.",
     "verifyItsYou": "Verify it's you",
     "pleaseVerify": "Please verify your {platform} account"
   },

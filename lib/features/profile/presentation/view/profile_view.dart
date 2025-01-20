@@ -196,7 +196,8 @@ class _ProfileViewState extends State<ProfileView> {
                 AppDivider.horizontal(),
                 verticalMargin12,
                 // Children Section
-                const ProfileChildrenSectionWidget(),
+                if (state.profileData?.user.role != "doctor")
+                  const ProfileChildrenSectionWidget(),
               ],
             ),
           ),

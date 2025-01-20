@@ -18,12 +18,15 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AppointmentState {
   bool get isLoading => throw _privateConstructorUsedError;
   AppErrorHandler? get error => throw _privateConstructorUsedError;
-  dynamic get allAppointments => throw _privateConstructorUsedError;
+  List<Map<String, dynamic>> get allAppointments =>
+      throw _privateConstructorUsedError;
   dynamic get appointmentDatesAndTimes => throw _privateConstructorUsedError;
   dynamic get selectedAppointment => throw _privateConstructorUsedError;
   bool get isAppointmentAdded => throw _privateConstructorUsedError;
   bool get isAppointmentDeleted => throw _privateConstructorUsedError;
   bool get isAppointmentUpdated => throw _privateConstructorUsedError;
+  bool get isAppointmentRejected => throw _privateConstructorUsedError;
+  bool get isAppointmentAccepted => throw _privateConstructorUsedError;
 
   /// Create a copy of AppointmentState
   /// with the given fields replaced by the non-null parameter values.
@@ -41,12 +44,14 @@ abstract class $AppointmentStateCopyWith<$Res> {
   $Res call(
       {bool isLoading,
       AppErrorHandler? error,
-      dynamic allAppointments,
+      List<Map<String, dynamic>> allAppointments,
       dynamic appointmentDatesAndTimes,
       dynamic selectedAppointment,
       bool isAppointmentAdded,
       bool isAppointmentDeleted,
-      bool isAppointmentUpdated});
+      bool isAppointmentUpdated,
+      bool isAppointmentRejected,
+      bool isAppointmentAccepted});
 
   $AppErrorHandlerCopyWith<$Res>? get error;
 }
@@ -68,12 +73,14 @@ class _$AppointmentStateCopyWithImpl<$Res, $Val extends AppointmentState>
   $Res call({
     Object? isLoading = null,
     Object? error = freezed,
-    Object? allAppointments = freezed,
+    Object? allAppointments = null,
     Object? appointmentDatesAndTimes = freezed,
     Object? selectedAppointment = freezed,
     Object? isAppointmentAdded = null,
     Object? isAppointmentDeleted = null,
     Object? isAppointmentUpdated = null,
+    Object? isAppointmentRejected = null,
+    Object? isAppointmentAccepted = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -84,10 +91,10 @@ class _$AppointmentStateCopyWithImpl<$Res, $Val extends AppointmentState>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as AppErrorHandler?,
-      allAppointments: freezed == allAppointments
+      allAppointments: null == allAppointments
           ? _value.allAppointments
           : allAppointments // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as List<Map<String, dynamic>>,
       appointmentDatesAndTimes: freezed == appointmentDatesAndTimes
           ? _value.appointmentDatesAndTimes
           : appointmentDatesAndTimes // ignore: cast_nullable_to_non_nullable
@@ -107,6 +114,14 @@ class _$AppointmentStateCopyWithImpl<$Res, $Val extends AppointmentState>
       isAppointmentUpdated: null == isAppointmentUpdated
           ? _value.isAppointmentUpdated
           : isAppointmentUpdated // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAppointmentRejected: null == isAppointmentRejected
+          ? _value.isAppointmentRejected
+          : isAppointmentRejected // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAppointmentAccepted: null == isAppointmentAccepted
+          ? _value.isAppointmentAccepted
+          : isAppointmentAccepted // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -137,12 +152,14 @@ abstract class _$$AppointmentStateImplCopyWith<$Res>
   $Res call(
       {bool isLoading,
       AppErrorHandler? error,
-      dynamic allAppointments,
+      List<Map<String, dynamic>> allAppointments,
       dynamic appointmentDatesAndTimes,
       dynamic selectedAppointment,
       bool isAppointmentAdded,
       bool isAppointmentDeleted,
-      bool isAppointmentUpdated});
+      bool isAppointmentUpdated,
+      bool isAppointmentRejected,
+      bool isAppointmentAccepted});
 
   @override
   $AppErrorHandlerCopyWith<$Res>? get error;
@@ -163,12 +180,14 @@ class __$$AppointmentStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? error = freezed,
-    Object? allAppointments = freezed,
+    Object? allAppointments = null,
     Object? appointmentDatesAndTimes = freezed,
     Object? selectedAppointment = freezed,
     Object? isAppointmentAdded = null,
     Object? isAppointmentDeleted = null,
     Object? isAppointmentUpdated = null,
+    Object? isAppointmentRejected = null,
+    Object? isAppointmentAccepted = null,
   }) {
     return _then(_$AppointmentStateImpl(
       isLoading: null == isLoading
@@ -179,10 +198,10 @@ class __$$AppointmentStateImplCopyWithImpl<$Res>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as AppErrorHandler?,
-      allAppointments: freezed == allAppointments
-          ? _value.allAppointments
+      allAppointments: null == allAppointments
+          ? _value._allAppointments
           : allAppointments // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as List<Map<String, dynamic>>,
       appointmentDatesAndTimes: freezed == appointmentDatesAndTimes
           ? _value.appointmentDatesAndTimes
           : appointmentDatesAndTimes // ignore: cast_nullable_to_non_nullable
@@ -203,6 +222,14 @@ class __$$AppointmentStateImplCopyWithImpl<$Res>
           ? _value.isAppointmentUpdated
           : isAppointmentUpdated // ignore: cast_nullable_to_non_nullable
               as bool,
+      isAppointmentRejected: null == isAppointmentRejected
+          ? _value.isAppointmentRejected
+          : isAppointmentRejected // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAppointmentAccepted: null == isAppointmentAccepted
+          ? _value.isAppointmentAccepted
+          : isAppointmentAccepted // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -213,21 +240,31 @@ class _$AppointmentStateImpl extends _AppointmentState {
   const _$AppointmentStateImpl(
       {this.isLoading = false,
       this.error,
-      this.allAppointments,
+      final List<Map<String, dynamic>> allAppointments = const [],
       this.appointmentDatesAndTimes,
       this.selectedAppointment,
       this.isAppointmentAdded = false,
       this.isAppointmentDeleted = false,
-      this.isAppointmentUpdated = false})
-      : super._();
+      this.isAppointmentUpdated = false,
+      this.isAppointmentRejected = false,
+      this.isAppointmentAccepted = false})
+      : _allAppointments = allAppointments,
+        super._();
 
   @override
   @JsonKey()
   final bool isLoading;
   @override
   final AppErrorHandler? error;
+  final List<Map<String, dynamic>> _allAppointments;
   @override
-  final dynamic allAppointments;
+  @JsonKey()
+  List<Map<String, dynamic>> get allAppointments {
+    if (_allAppointments is EqualUnmodifiableListView) return _allAppointments;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allAppointments);
+  }
+
   @override
   final dynamic appointmentDatesAndTimes;
   @override
@@ -241,10 +278,16 @@ class _$AppointmentStateImpl extends _AppointmentState {
   @override
   @JsonKey()
   final bool isAppointmentUpdated;
+  @override
+  @JsonKey()
+  final bool isAppointmentRejected;
+  @override
+  @JsonKey()
+  final bool isAppointmentAccepted;
 
   @override
   String toString() {
-    return 'AppointmentState(isLoading: $isLoading, error: $error, allAppointments: $allAppointments, appointmentDatesAndTimes: $appointmentDatesAndTimes, selectedAppointment: $selectedAppointment, isAppointmentAdded: $isAppointmentAdded, isAppointmentDeleted: $isAppointmentDeleted, isAppointmentUpdated: $isAppointmentUpdated)';
+    return 'AppointmentState(isLoading: $isLoading, error: $error, allAppointments: $allAppointments, appointmentDatesAndTimes: $appointmentDatesAndTimes, selectedAppointment: $selectedAppointment, isAppointmentAdded: $isAppointmentAdded, isAppointmentDeleted: $isAppointmentDeleted, isAppointmentUpdated: $isAppointmentUpdated, isAppointmentRejected: $isAppointmentRejected, isAppointmentAccepted: $isAppointmentAccepted)';
   }
 
   @override
@@ -256,7 +299,7 @@ class _$AppointmentStateImpl extends _AppointmentState {
                 other.isLoading == isLoading) &&
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality()
-                .equals(other.allAppointments, allAppointments) &&
+                .equals(other._allAppointments, _allAppointments) &&
             const DeepCollectionEquality().equals(
                 other.appointmentDatesAndTimes, appointmentDatesAndTimes) &&
             const DeepCollectionEquality()
@@ -266,7 +309,11 @@ class _$AppointmentStateImpl extends _AppointmentState {
             (identical(other.isAppointmentDeleted, isAppointmentDeleted) ||
                 other.isAppointmentDeleted == isAppointmentDeleted) &&
             (identical(other.isAppointmentUpdated, isAppointmentUpdated) ||
-                other.isAppointmentUpdated == isAppointmentUpdated));
+                other.isAppointmentUpdated == isAppointmentUpdated) &&
+            (identical(other.isAppointmentRejected, isAppointmentRejected) ||
+                other.isAppointmentRejected == isAppointmentRejected) &&
+            (identical(other.isAppointmentAccepted, isAppointmentAccepted) ||
+                other.isAppointmentAccepted == isAppointmentAccepted));
   }
 
   @override
@@ -274,12 +321,14 @@ class _$AppointmentStateImpl extends _AppointmentState {
       runtimeType,
       isLoading,
       error,
-      const DeepCollectionEquality().hash(allAppointments),
+      const DeepCollectionEquality().hash(_allAppointments),
       const DeepCollectionEquality().hash(appointmentDatesAndTimes),
       const DeepCollectionEquality().hash(selectedAppointment),
       isAppointmentAdded,
       isAppointmentDeleted,
-      isAppointmentUpdated);
+      isAppointmentUpdated,
+      isAppointmentRejected,
+      isAppointmentAccepted);
 
   /// Create a copy of AppointmentState
   /// with the given fields replaced by the non-null parameter values.
@@ -295,12 +344,14 @@ abstract class _AppointmentState extends AppointmentState {
   const factory _AppointmentState(
       {final bool isLoading,
       final AppErrorHandler? error,
-      final dynamic allAppointments,
+      final List<Map<String, dynamic>> allAppointments,
       final dynamic appointmentDatesAndTimes,
       final dynamic selectedAppointment,
       final bool isAppointmentAdded,
       final bool isAppointmentDeleted,
-      final bool isAppointmentUpdated}) = _$AppointmentStateImpl;
+      final bool isAppointmentUpdated,
+      final bool isAppointmentRejected,
+      final bool isAppointmentAccepted}) = _$AppointmentStateImpl;
   const _AppointmentState._() : super._();
 
   @override
@@ -308,7 +359,7 @@ abstract class _AppointmentState extends AppointmentState {
   @override
   AppErrorHandler? get error;
   @override
-  dynamic get allAppointments;
+  List<Map<String, dynamic>> get allAppointments;
   @override
   dynamic get appointmentDatesAndTimes;
   @override
@@ -319,6 +370,10 @@ abstract class _AppointmentState extends AppointmentState {
   bool get isAppointmentDeleted;
   @override
   bool get isAppointmentUpdated;
+  @override
+  bool get isAppointmentRejected;
+  @override
+  bool get isAppointmentAccepted;
 
   /// Create a copy of AppointmentState
   /// with the given fields replaced by the non-null parameter values.

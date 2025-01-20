@@ -19,12 +19,6 @@ class FirebaseDI {
             locator<FlutterLocalNotificationsPlugin>(),
       ),
     );
-    locator.registerSingleton<NotificationServices>(
-      NotificationServices(
-        localNotificationServices: locator<LocalNotificationServices>(),
-        messaging: FirebaseMessaging.instance,
-      ),
-    );
 
     // Usecase
     locator.registerSingleton<GetDeviceTokenUsecase>(
