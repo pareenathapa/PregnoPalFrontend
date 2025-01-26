@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../core/connections/api/dio_service.dart';
 import '../../../../core/failure/error_handler.dart';
+import '../../../../di/main_di.dart';
 import '../../domain/usecase/get_all_article_usecase.dart';
 import '../../domain/usecase/get_single_article_usecase.dart';
 part 'article_state.dart';
@@ -17,6 +19,54 @@ class ArticleCubit extends Cubit<ArticleState> {
   })  : _getAllArticleUsecase = getAllArticleUsecase,
         _getSingleArticleUsecase = getSingleArticleUsecase,
         super(ArticleState.initial());
+
+  Future<void> addArticle({
+    required String title,
+    required String description,
+    required String author,
+    String? authorImage,
+    required String articleCover,
+  }) async {
+    emit(
+      state.copyWith(
+        isLoading: true,
+        error: null,
+        createdAticle: false,
+      ),
+    );
+    // const { author, title, content, author_image, article_cover } = req.body;
+
+    try {
+      final response = await locator<DioService>().dio.post(
+        '/articles',
+        data: {
+          'title': title,
+          'content': description,
+          'author': author,
+          if (authorImage != null) 'author_image': authorImage,
+          'article_cover': articleCover,
+        },
+      );
+      if (response.statusCode == 201) {
+        emit(
+          state.copyWith(
+            isLoading: false,
+            error: null,
+            createdAticle: true,
+          ),
+        );
+        getAllArticle();
+      }
+    } catch (e) {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          createdAticle: false,
+          error: AppErrorHandler(message: "Failed to add article"),
+        ),
+      );
+    }
+  }
 
   Future<void> changeFilter({
     required String filter,

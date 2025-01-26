@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/constants/api/api_endpoints_constants.dart';
 import '../../../../config/constants/size/app_size.dart';
 import '../../../../core/common/app_components/app_button.dart';
+import '../../../../core/common/app_components/app_text.dart';
 import '../../../../core/common/app_status_chips.dart';
 import '../../../../core/common/custom_components/custom_text_field.dart';
 import '../../../../core/common/default_app_bar.dart';
@@ -232,6 +233,8 @@ class _AppointmentDetailPageState extends State<AppointmentDetailPage> {
     );
   }
 
+  final TextEditingController _commentController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileDetailCubit, ProfileDetailState>(
@@ -251,7 +254,7 @@ class _AppointmentDetailPageState extends State<AppointmentDetailPage> {
               locator<NavigationService>().maybePopTop();
             } else if (appState.isAppointmentAccepted) {
               context.showSnackBar(
-                message: 'Appointment Accepted',
+                message: 'Done',
               );
               locator<NavigationService>().maybePopTop();
             } else if (appState.isAppointmentUpdated) {
@@ -276,249 +279,311 @@ class _AppointmentDetailPageState extends State<AppointmentDetailPage> {
                 ),
                 body: Padding(
                   padding: horizontalPadding16,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Accept , Reject, Counter Button
-                      if (state.profileData?.user.role == 'doctor')
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Accept , Reject, Counter Button
+                        if (state.profileData?.user.role == 'doctor' &&
+                            appState.selectedAppointment['status']
+                                    .toString()
+                                    .toLowerCase() ==
+                                'pending')
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: AppButton.primary(
+                                  onPressed: () {
+                                    context
+                                        .read<AppointmentCubit>()
+                                        .acceptedAppointment(
+                                            widget.appointmentId);
+                                  },
+                                  label: "Accept",
+                                ),
+                              ),
+                              horizontalMargin10,
+                              Expanded(
+                                child: AppButton.secondary(
+                                  onPressed: () {
+                                    context
+                                        .read<AppointmentCubit>()
+                                        .rejectAppointment(
+                                          widget.appointmentId,
+                                        );
+                                  },
+                                  label: "Reject",
+                                ),
+                              ),
+                              horizontalMargin10,
+                              Expanded(
+                                child: AppButton.stroke(
+                                  onPressed: () {
+                                    log("${appState.selectedAppointment['time']}");
+                                    counterAppointmentBottomSheet(
+                                      cubit: context.read<AppointmentCubit>(),
+                                      date: DateTime.parse(
+                                        appState.selectedAppointment[
+                                            'appointment_date'],
+                                      ),
+                                      time: DateTime.fromMillisecondsSinceEpoch(
+                                        int.parse(appState
+                                            .selectedAppointment['time']),
+                                      ),
+                                      mode:
+                                          appState.selectedAppointment['mode'],
+                                    );
+                                  },
+                                  label: "Counter",
+                                ),
+                              ),
+                            ],
+                          ),
+                        verticalMargin16,
+                        // Appointment Title
+                        Center(
+                          child: Text(
+                            appState.selectedAppointment['title'] ?? 'Apple',
+                            style: AllTextStyle.f20W6,
+                          ),
+                        ),
+                        verticalMargin24,
+                        // Doctor Details
+                        // Doctor Image + Name + specialization
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Expanded(
-                              child: AppButton.primary(
-                                onPressed: () {
-                                  context
-                                      .read<AppointmentCubit>()
-                                      .acceptedAppointment(
-                                        widget.appointmentId,
-                                      );
-                                },
-                                label: "Accept",
+                            // Doctor Image
+                            Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(40),
+                                child: Image.network(
+                                  appState.selectedAppointment['doctor_id']
+                                              ['picture']
+                                          .toString()
+                                          .startsWith("/uploads")
+                                      ? "${ApiEndpoints.baseDomain}${appState.selectedAppointment['doctor_id']['picture']}"
+                                      : appState
+                                              .selectedAppointment['doctor_id']
+                                          ['picture'],
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-                            horizontalMargin10,
-                            Expanded(
-                              child: AppButton.secondary(
-                                onPressed: () {
-                                  context
-                                      .read<AppointmentCubit>()
-                                      .rejectAppointment(
-                                        widget.appointmentId,
-                                      );
-                                },
-                                label: "Reject",
-                              ),
-                            ),
-                            horizontalMargin10,
-                            Expanded(
-                              child: AppButton.stroke(
-                                onPressed: () {
-                                  log("${appState.selectedAppointment['time']}");
-                                  counterAppointmentBottomSheet(
-                                    cubit: context.read<AppointmentCubit>(),
-                                    date: DateTime.parse(
-                                      appState.selectedAppointment[
-                                          'appointment_date'],
-                                    ),
-                                    time: DateTime.fromMillisecondsSinceEpoch(
-                                      int.parse(
-                                          appState.selectedAppointment['time']),
-                                    ),
-                                    mode: appState.selectedAppointment['mode'],
-                                  );
-                                },
-                                label: "Counter",
-                              ),
+                            horizontalMargin12,
+                            // Doctor Name + specialization
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  appState.selectedAppointment['doctor_id']
+                                      ['name'],
+                                  style: AllTextStyle.f16W6,
+                                ),
+                                verticalMargin4,
+                                Text(
+                                  appState.selectedAppointment['doctor_id']
+                                      ['specialization'],
+                                  style: AllTextStyle.f14W4,
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      verticalMargin16,
-                      // Appointment Title
-                      Center(
-                        child: Text(
-                          appState.selectedAppointment['title'] ?? 'Apple',
-                          style: AllTextStyle.f20W6,
+                        verticalMargin16,
+                        // Appointment Status + Mode
+                        Row(
+                          children: [
+                            StatusChips(
+                                label: appState.selectedAppointment['status']),
+                            horizontalMargin8,
+                            StatusChips(
+                                label: appState.selectedAppointment['mode']),
+                          ],
                         ),
-                      ),
-                      verticalMargin24,
-                      // Doctor Details
-                      // Doctor Image + Name + specialization
-                      Row(
-                        children: [
-                          // Doctor Image
-                          Container(
-                            width: 80,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.grey,
-                              ),
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(40),
-                              child: Image.network(
-                                appState.selectedAppointment['doctor_id']
-                                            ['picture']
-                                        .toString()
-                                        .startsWith("/uploads")
-                                    ? "${ApiEndpoints.baseDomain}${appState.selectedAppointment['doctor_id']['picture']}"
-                                    : appState.selectedAppointment['doctor_id']
-                                        ['picture'],
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          horizontalMargin12,
-                          // Doctor Name + specialization
+                        verticalMargin16,
+                        // If mode is online, show the link
+                        if (appState.selectedAppointment['mode']
+                                .toString()
+                                .toLowerCase() ==
+                            'online')
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                appState.selectedAppointment['doctor_id']
-                                    ['name'],
+                                'Meeting Link',
                                 style: AllTextStyle.f16W6,
                               ),
                               verticalMargin4,
-                              Text(
-                                appState.selectedAppointment['doctor_id']
-                                    ['specialization'],
-                                style: AllTextStyle.f14W4,
+                              GestureDetector(
+                                onTap: () {
+                                  locator<UrlLauncherHelper>().launchURL(
+                                    appState
+                                        .selectedAppointment['meeting_link'],
+                                  );
+                                },
+                                child: Text(
+                                  appState.selectedAppointment['meeting_link']
+                                      .toString(),
+                                  style: AllTextStyle.f16W4.copyWith(
+                                    color: Colors.blue,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                      verticalMargin16,
-                      // Appointment Status + Mode
-                      Row(
-                        children: [
-                          StatusChips(
-                              label: appState.selectedAppointment['status']),
-                          horizontalMargin8,
-                          StatusChips(
-                              label: appState.selectedAppointment['mode']),
-                        ],
-                      ),
-                      verticalMargin16,
-                      // If mode is online, show the link
-                      if (appState.selectedAppointment['mode']
-                              .toString()
-                              .toLowerCase() ==
-                          'online')
+                        verticalMargin16,
+                        // Appointment Date + Time
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Meeting Link',
+                              'Appointment Date',
                               style: AllTextStyle.f16W6,
                             ),
                             verticalMargin4,
-                            GestureDetector(
-                              onTap: () {
-                                locator<UrlLauncherHelper>().launchURL(
-                                  appState.selectedAppointment['meeting_link'],
-                                );
-                              },
-                              child: Text(
-                                "state.selectedAppointment['meeting_link']",
-                                style: AllTextStyle.f16W4.copyWith(
-                                  color: Colors.blue,
-                                ),
+                            Text(
+                              DateTime.parse(
+                                appState
+                                    .selectedAppointment['appointment_date'],
+                              ).formatDateTime(
+                                DateTimeFormatterString
+                                    .abbreviatedDayMonthDayFormat,
                               ),
+                              style: AllTextStyle.f16W4,
+                            ),
+                            verticalMargin16,
+                            Text(
+                              'Appointment Time',
+                              style: AllTextStyle.f16W6,
+                            ),
+                            verticalMargin4,
+                            Text(
+                              DateTime.parse(
+                                appState
+                                    .selectedAppointment['appointment_date'],
+                              ).formatDateTime(
+                                DateTimeFormatterString.civilianTime,
+                              ),
+                              style: AllTextStyle.f16W4,
                             ),
                           ],
                         ),
-                      verticalMargin16,
-                      // Appointment Date + Time
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Appointment Date',
-                            style: AllTextStyle.f16W6,
-                          ),
+                        //  Child Details
+                        verticalMargin16,
+                        Text(
+                          'Child Details',
+                          style: AllTextStyle.f16W6,
+                        ),
+                        verticalMargin4,
+                        Text(
+                          'Name: ${appState.selectedAppointment['child_id']['name']}',
+                          style: AllTextStyle.f16W4,
+                        ),
+                        verticalMargin4,
+                        Text(
+                          'Age: ${appState.selectedAppointment['child_id']['sex']}',
+                          style: AllTextStyle.f16W4,
+                        ),
+                        verticalMargin4,
+
+                        Text(
+                          'Height: ${appState.selectedAppointment['child_id']['height']} cm',
+                          style: AllTextStyle.f16W4,
+                        ),
+                        verticalMargin4,
+                        Text(
+                          'Weight: ${appState.selectedAppointment['child_id']['weight']} kg',
+                          style: AllTextStyle.f16W4,
+                        ),
+                        verticalMargin4,
+                        Text(
+                          'Weight: ${appState.selectedAppointment['child_id']['weight']} kg',
+                          style: AllTextStyle.f16W4,
+                        ),
+
+                        Text(
+                          'DOB:  ${DateTime.parse(
+                            appState.selectedAppointment['appointment_date'],
+                          ).formatDateTime(
+                            DateTimeFormatterString.dayMonthYear,
+                          )}',
+                          style: AllTextStyle.f16W4,
+                        ),
+                        verticalMargin4,
+
+                        // Appointment Description
+                        verticalMargin16,
+                        Text(
+                          'Description',
+                          style: AllTextStyle.f16W6,
+                        ),
+                        verticalMargin4,
+                        Text(
+                          appState.selectedAppointment['description'],
+                          style: AllTextStyle.f16W4,
+                        ),
+                        verticalMargin24,
+                        if (appState.selectedAppointment['status']
+                                .toString()
+                                .toLowerCase() ==
+                            'completed') ...[
+                          AppText('Comment', style: AllTextStyle.f16W6),
                           verticalMargin4,
-                          Text(
-                            DateTime.parse(
-                              appState.selectedAppointment['appointment_date'],
-                            ).formatDateTime(
-                              DateTimeFormatterString
-                                  .abbreviatedDayMonthDayFormat,
-                            ),
-                            style: AllTextStyle.f16W4,
-                          ),
-                          verticalMargin16,
-                          Text(
-                            'Appointment Time',
-                            style: AllTextStyle.f16W6,
-                          ),
-                          verticalMargin4,
-                          Text(
-                            DateTime.parse(
-                              appState.selectedAppointment['appointment_date'],
-                            ).formatDateTime(
-                              DateTimeFormatterString.civilianTime,
-                            ),
+                          AppText(
+                            appState.selectedAppointment['comment'],
                             style: AllTextStyle.f16W4,
                           ),
                         ],
-                      ),
-                      //  Child Details
-                      verticalMargin16,
-                      Text(
-                        'Child Details',
-                        style: AllTextStyle.f16W6,
-                      ),
-                      verticalMargin4,
-                      Text(
-                        'Name: ${appState.selectedAppointment['child_id']['name']}',
-                        style: AllTextStyle.f16W4,
-                      ),
-                      verticalMargin4,
-                      Text(
-                        'Age: ${appState.selectedAppointment['child_id']['sex']}',
-                        style: AllTextStyle.f16W4,
-                      ),
-                      verticalMargin4,
-
-                      Text(
-                        'Height: ${appState.selectedAppointment['child_id']['height']} cm',
-                        style: AllTextStyle.f16W4,
-                      ),
-                      verticalMargin4,
-                      Text(
-                        'Weight: ${appState.selectedAppointment['child_id']['weight']} kg',
-                        style: AllTextStyle.f16W4,
-                      ),
-                      verticalMargin4,
-                      Text(
-                        'Weight: ${appState.selectedAppointment['child_id']['weight']} kg',
-                        style: AllTextStyle.f16W4,
-                      ),
-
-                      Text(
-                        'DOB:  ${DateTime.parse(
-                          appState.selectedAppointment['appointment_date'],
-                        ).formatDateTime(
-                          DateTimeFormatterString.dayMonthYear,
-                        )}',
-                        style: AllTextStyle.f16W4,
-                      ),
-                      verticalMargin4,
-
-                      // Appointment Description
-                      verticalMargin16,
-                      Text(
-                        'Description',
-                        style: AllTextStyle.f16W6,
-                      ),
-                      verticalMargin4,
-                      Text(
-                        appState.selectedAppointment['description'],
-                        style: AllTextStyle.f16W4,
-                      ),
-                    ],
+                        // Comment Section
+                        if (state.profileData?.user.role == 'doctor' &&
+                            appState.selectedAppointment['status']
+                                    .toString()
+                                    .toLowerCase() ==
+                                'accepted')
+                          Form(
+                            key: formKey,
+                            child: KTextFormField(
+                              hintText: 'Comment',
+                              controller: _commentController,
+                              maxLines: 3,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Comment is required';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        verticalMargin12,
+                        if (state.profileData?.user.role == 'doctor' &&
+                            appState.selectedAppointment['status']
+                                    .toString()
+                                    .toLowerCase() ==
+                                'accepted')
+                          AppButton.primary(
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                context
+                                    .read<AppointmentCubit>()
+                                    .completeAppointment(
+                                      appointmentId: widget.appointmentId,
+                                      comment: _commentController.text,
+                                    );
+                              }
+                            },
+                            label: "Completed",
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               );

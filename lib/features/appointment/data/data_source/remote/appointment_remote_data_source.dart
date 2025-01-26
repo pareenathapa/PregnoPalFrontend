@@ -15,12 +15,18 @@ class AppointmentRemoteDataSource {
   Future<Either<AppErrorHandler, List<Map<String, dynamic>>>>
       getAllAppointments({
     String? status,
+    String? doctorId,
+    String? childId,
+    String? sort,
   }) async {
     try {
       final response = await api.dio.get(
         ApiEndpoints.appointmentsURL,
         queryParameters: {
           'status': status,
+          'doctor_id': doctorId,
+          'child_id': childId,
+          'sort': sort,
         },
       );
       if (response.statusCode == 200 || response.data != null) {

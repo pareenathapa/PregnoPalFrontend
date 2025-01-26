@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../../config/constants/api/api_endpoints_constants.dart';
 import '../../../../config/constants/size/app_size.dart';
 import '../../../../core/common/app_components/app_button.dart';
 import '../../../../core/common/app_status_chips.dart';
@@ -144,13 +145,12 @@ class _CalenderViewState extends State<CalenderView> {
   }
 
   void _showAppointmentDetails(Map<String, dynamic> appointment) {
-    showDialog(
+    showModalBottomSheet(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text('Appointment Details'),
-          content: Padding(
-            padding: horizontalPadding16,
+        return Padding(
+          padding: horizontalPadding16 + verticalPadding16,
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -178,8 +178,15 @@ class _CalenderViewState extends State<CalenderView> {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(40),
+                        // child: Image.network(
+                        //   appointment['doctor']['picture'],
+                        //   fit: BoxFit.cover,
                         child: Image.network(
-                          appointment['doctor']['picture'],
+                          appointment['doctor']['picture']
+                                  .toString()
+                                  .startsWith("/uploads")
+                              ? "${ApiEndpoints.baseDomain}${appointment['doctor']['picture']}"
+                              : appointment['doctor']['picture'],
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -320,14 +327,6 @@ class _CalenderViewState extends State<CalenderView> {
               ],
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Close'),
-            ),
-          ],
         );
       },
     );

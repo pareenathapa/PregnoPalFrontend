@@ -13,6 +13,9 @@ final authenticationRoute = AutoRoute(
       initial: true,
     ),
     AutoRoute(
+      page: ForgotPasswordScreen.page,
+    ),
+    AutoRoute(
       path: AppRoutePoints.registerRoute,
       page: RegisterRoute.page,
     ),

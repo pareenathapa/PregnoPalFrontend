@@ -6,9 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
+import '../../../../config/constants/colors/primitive_colors_constants.dart';
 import '../../../../config/constants/size/app_size.dart';
 import '../../../../core/bootstrap.dart';
 import '../../../../core/common/app_components/app_button.dart';
+import '../../../../core/common/app_components/app_cached_network_image.dart';
 import '../../../../core/common/app_components/app_text.dart';
 import '../../../../core/common/custom_components/custom_text_field.dart';
 import '../../../../core/common/default_app_bar.dart';
@@ -47,8 +49,12 @@ class _AppointmentViewState extends State<AppointmentView> {
   final _childController = TextEditingController();
   final _childIdController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final _meetingLinkController = TextEditingController();
   DateTime time = DateTime.now();
   DateTime date = DateTime.now();
+
+  String selectedOnlineMethod = "G";
+  bool isOnline = false;
 
   @override
   Widget build(BuildContext context) {
@@ -79,13 +85,6 @@ class _AppointmentViewState extends State<AppointmentView> {
       child: Scaffold(
         appBar: DefaultAppBar(
           title: "Book Appointment",
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.notifications_outlined),
-              onPressed: () => context.router.pushNamed('NotificationScreen'),
-            ),
-            horizontalMargin8,
-          ],
         ),
         body: SizedBox(
           width: double.infinity,
@@ -104,6 +103,14 @@ class _AppointmentViewState extends State<AppointmentView> {
                     controller: _titleController,
                   ),
                   verticalMargin12,
+                  KTextFormField(
+                    hintText: 'Description',
+                    titleText: 'Description',
+                    controller: _descriptionController,
+                    maxLines: 3,
+                  ),
+                  verticalMargin12,
+
                   // Doctor Selection Dropdown with Search
                   _buildDoctorSelection(),
                   verticalMargin12,
@@ -115,6 +122,8 @@ class _AppointmentViewState extends State<AppointmentView> {
                   verticalMargin12,
                   // Mode Selection (Dropdown)
                   _buildModeSelection(context),
+                  verticalMargin12,
+                  if (isOnline) _buildOnlineModeLinkField(),
                   verticalMargin12,
                   // Child Selection Dropdown with Search
                   _buildChildSelection(),
@@ -130,6 +139,63 @@ class _AppointmentViewState extends State<AppointmentView> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildOnlineModeLinkField() {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: AppButton.custom(
+                onPressed: () {
+                  setState(() {
+                    selectedOnlineMethod = "G";
+                  });
+                },
+                showBorder: selectedOnlineMethod == "G",
+                border: BorderSide(color: PrimitiveColors.primary),
+                label: "Google Meet",
+                prefix: AppCachedNetworkImage.avatar(
+                  alt: "Google",
+                  imageUrl:
+                      "https://static-00.iconduck.com/assets.00/google-meet-icon-2048x2048-js4zjooy.png",
+                  height: 40.h,
+                  width: 40.w,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            horizontalMargin12,
+            Expanded(
+                child: AppButton.custom(
+              onPressed: () {
+                setState(() {
+                  selectedOnlineMethod = "z";
+                });
+              },
+              label: "Zoom",
+              showBorder: selectedOnlineMethod == "z",
+              border: BorderSide(color: PrimitiveColors.primary),
+              prefix: AppCachedNetworkImage.avatar(
+                alt: "Google",
+                imageUrl:
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ8heXta8npoK1xCPaRmMWjSKQI4NATzNb9A&s",
+                height: 40.h,
+                width: 40.w,
+                fit: BoxFit.contain,
+              ),
+            )),
+          ],
+        ),
+        verticalMargin12,
+        KTextFormField(
+          hintText: 'Meeting Link',
+          titleText: 'Meeting Link',
+          controller: _meetingLinkController,
+        ),
+      ],
     );
   }
 
@@ -233,12 +299,18 @@ class _AppointmentViewState extends State<AppointmentView> {
                   title: const Text('Physical'),
                   onTap: () {
                     _modeController.text = 'Physical';
+                    setState(() {
+                      isOnline = false;
+                    });
                     Navigator.of(context).pop();
                   },
                 ),
                 ListTile(
                   title: const Text('Online'),
                   onTap: () {
+                    setState(() {
+                      isOnline = true;
+                    });
                     _modeController.text = 'Online';
                     Navigator.of(context).pop();
                   },
@@ -277,13 +349,6 @@ class _AppointmentViewState extends State<AppointmentView> {
           },
           itemBuilder: (_, suggestion) =>
               ListTile(title: Text(suggestion['name'])),
-        ),
-        verticalMargin12,
-        KTextFormField(
-          hintText: 'Description',
-          titleText: 'Description',
-          controller: _descriptionController,
-          maxLines: 3,
         ),
       ],
     );
@@ -346,7 +411,9 @@ class _AppointmentViewState extends State<AppointmentView> {
             time: appointmentDateTime!,
             title: _titleController.text,
             mode: _modeController.text,
-            meetingLink: "hello",
+            meetingLink: _modeController.text == "Online"
+                ? _meetingLinkController.text
+                : "",
             childId: _childIdController.text,
             description: _descriptionController.text,
           );

@@ -6,4 +6,9 @@ import '../../../../config/routes/routes.gr.dart';
 final articleDetailPage = AutoRoute(
   path: AppRoutePoints.articleDetailRoute,
   page: ArticleDetailRoute.page,
+  children: [],
+);
+
+final addArticleRoute = AutoRoute(
+  page: AddArticleRoute.page,
 );

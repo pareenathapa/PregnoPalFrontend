@@ -22,6 +22,7 @@ mixin _$AuthenticationState {
   bool get isLoggedOut => throw _privateConstructorUsedError;
   bool get isRegisterSuccess => throw _privateConstructorUsedError;
   bool get isLoginFormValid => throw _privateConstructorUsedError;
+  bool get isPasswordChanged => throw _privateConstructorUsedError;
   bool get isRegisterFormValid => throw _privateConstructorUsedError;
   bool get isAgreed => throw _privateConstructorUsedError;
   String get selectedRole => throw _privateConstructorUsedError;
@@ -49,6 +50,7 @@ abstract class $AuthenticationStateCopyWith<$Res> {
       bool isLoggedOut,
       bool isRegisterSuccess,
       bool isLoginFormValid,
+      bool isPasswordChanged,
       bool isRegisterFormValid,
       bool isAgreed,
       String selectedRole,
@@ -80,6 +82,7 @@ class _$AuthenticationStateCopyWithImpl<$Res, $Val extends AuthenticationState>
     Object? isLoggedOut = null,
     Object? isRegisterSuccess = null,
     Object? isLoginFormValid = null,
+    Object? isPasswordChanged = null,
     Object? isRegisterFormValid = null,
     Object? isAgreed = null,
     Object? selectedRole = null,
@@ -111,6 +114,10 @@ class _$AuthenticationStateCopyWithImpl<$Res, $Val extends AuthenticationState>
       isLoginFormValid: null == isLoginFormValid
           ? _value.isLoginFormValid
           : isLoginFormValid // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPasswordChanged: null == isPasswordChanged
+          ? _value.isPasswordChanged
+          : isPasswordChanged // ignore: cast_nullable_to_non_nullable
               as bool,
       isRegisterFormValid: null == isRegisterFormValid
           ? _value.isRegisterFormValid
@@ -169,6 +176,7 @@ abstract class _$$AuthenticationStateImplCopyWith<$Res>
       bool isLoggedOut,
       bool isRegisterSuccess,
       bool isLoginFormValid,
+      bool isPasswordChanged,
       bool isRegisterFormValid,
       bool isAgreed,
       String selectedRole,
@@ -199,6 +207,7 @@ class __$$AuthenticationStateImplCopyWithImpl<$Res>
     Object? isLoggedOut = null,
     Object? isRegisterSuccess = null,
     Object? isLoginFormValid = null,
+    Object? isPasswordChanged = null,
     Object? isRegisterFormValid = null,
     Object? isAgreed = null,
     Object? selectedRole = null,
@@ -230,6 +239,10 @@ class __$$AuthenticationStateImplCopyWithImpl<$Res>
       isLoginFormValid: null == isLoginFormValid
           ? _value.isLoginFormValid
           : isLoginFormValid // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPasswordChanged: null == isPasswordChanged
+          ? _value.isPasswordChanged
+          : isPasswordChanged // ignore: cast_nullable_to_non_nullable
               as bool,
       isRegisterFormValid: null == isRegisterFormValid
           ? _value.isRegisterFormValid
@@ -269,6 +282,7 @@ class _$AuthenticationStateImpl extends _AuthenticationState {
       this.isLoggedOut = false,
       this.isRegisterSuccess = false,
       this.isLoginFormValid = false,
+      this.isPasswordChanged = false,
       this.isRegisterFormValid = false,
       this.isAgreed = false,
       this.selectedRole = "user",
@@ -297,6 +311,9 @@ class _$AuthenticationStateImpl extends _AuthenticationState {
   final bool isLoginFormValid;
   @override
   @JsonKey()
+  final bool isPasswordChanged;
+  @override
+  @JsonKey()
   final bool isRegisterFormValid;
   @override
   @JsonKey()
@@ -313,7 +330,7 @@ class _$AuthenticationStateImpl extends _AuthenticationState {
 
   @override
   String toString() {
-    return 'AuthenticationState(loginCheckSuccess: $loginCheckSuccess, isLoading: $isLoading, isLoggedIn: $isLoggedIn, isLoggedOut: $isLoggedOut, isRegisterSuccess: $isRegisterSuccess, isLoginFormValid: $isLoginFormValid, isRegisterFormValid: $isRegisterFormValid, isAgreed: $isAgreed, selectedRole: $selectedRole, error: $error, deviceToken: $deviceToken, user: $user)';
+    return 'AuthenticationState(loginCheckSuccess: $loginCheckSuccess, isLoading: $isLoading, isLoggedIn: $isLoggedIn, isLoggedOut: $isLoggedOut, isRegisterSuccess: $isRegisterSuccess, isLoginFormValid: $isLoginFormValid, isPasswordChanged: $isPasswordChanged, isRegisterFormValid: $isRegisterFormValid, isAgreed: $isAgreed, selectedRole: $selectedRole, error: $error, deviceToken: $deviceToken, user: $user)';
   }
 
   @override
@@ -333,6 +350,8 @@ class _$AuthenticationStateImpl extends _AuthenticationState {
                 other.isRegisterSuccess == isRegisterSuccess) &&
             (identical(other.isLoginFormValid, isLoginFormValid) ||
                 other.isLoginFormValid == isLoginFormValid) &&
+            (identical(other.isPasswordChanged, isPasswordChanged) ||
+                other.isPasswordChanged == isPasswordChanged) &&
             (identical(other.isRegisterFormValid, isRegisterFormValid) ||
                 other.isRegisterFormValid == isRegisterFormValid) &&
             (identical(other.isAgreed, isAgreed) ||
@@ -354,6 +373,7 @@ class _$AuthenticationStateImpl extends _AuthenticationState {
       isLoggedOut,
       isRegisterSuccess,
       isLoginFormValid,
+      isPasswordChanged,
       isRegisterFormValid,
       isAgreed,
       selectedRole,
@@ -379,6 +399,7 @@ abstract class _AuthenticationState extends AuthenticationState {
       final bool isLoggedOut,
       final bool isRegisterSuccess,
       final bool isLoginFormValid,
+      final bool isPasswordChanged,
       final bool isRegisterFormValid,
       final bool isAgreed,
       final String selectedRole,
@@ -399,6 +420,8 @@ abstract class _AuthenticationState extends AuthenticationState {
   bool get isRegisterSuccess;
   @override
   bool get isLoginFormValid;
+  @override
+  bool get isPasswordChanged;
   @override
   bool get isRegisterFormValid;
   @override

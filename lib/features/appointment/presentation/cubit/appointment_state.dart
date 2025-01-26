@@ -15,6 +15,7 @@ class AppointmentState with _$AppointmentState {
     @Default(false) bool isAppointmentUpdated,
     @Default(false) bool isAppointmentRejected,
     @Default(false) bool isAppointmentAccepted,
+    dynamic todayAppointment,
   }) = _AppointmentState;
 
   // Initial state

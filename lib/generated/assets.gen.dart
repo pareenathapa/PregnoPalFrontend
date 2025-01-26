@@ -84,6 +84,9 @@ class $AssetsIconGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Splash.png
+  AssetGenImage get splash => const AssetGenImage('assets/images/Splash.png');
+
   /// File path: assets/images/pp.png
   AssetGenImage get pp => const AssetGenImage('assets/images/pp.png');
 
@@ -91,7 +94,7 @@ class $AssetsImagesGen {
   AssetGenImage get test => const AssetGenImage('assets/images/test.jpg');
 
   /// List of all assets
-  List<AssetGenImage> get values => [pp, test];
+  List<AssetGenImage> get values => [splash, pp, test];
 }
 
 class $AssetsTranslationsGen {

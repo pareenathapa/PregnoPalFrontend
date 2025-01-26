@@ -10,6 +10,7 @@ class ArticleState with _$ArticleState {
     dynamic data,
     dynamic selectedArticle,
     @Default("newest") String filter,
+    @Default(false) bool createdAticle,
   }) = _ArticleState;
 
   // Initial state

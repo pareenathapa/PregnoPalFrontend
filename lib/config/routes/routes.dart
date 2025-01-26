@@ -22,6 +22,7 @@ class AppRouter extends RootStackRouter {
         appointmentDetailRoute,
         profileRoute,
         articleDetailPage,
+        addArticleRoute,
         AutoRoute(
           page: NotificationScreen.page,
         ),

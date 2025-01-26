@@ -9,6 +9,7 @@ import '../../../../core/helper/date_time_formatter_string.dart';
 import '../../../../core/service/navigation_service.dart';
 import '../../../../core/utils/extensions/date_time_helper_extension.dart';
 import '../../../../di/main_di.dart';
+import '../../../profile/presentation/cubit/profile_detail_cubit.dart';
 import '../cubit/article_cubit.dart';
 import '../widgets/article_widget.dart';
 
@@ -68,82 +69,89 @@ class ArticlesView extends StatelessWidget implements AutoRouteWrapper {
         // TODO: implement listener
       },
       builder: (context, state) {
-        return Scaffold(
-          appBar: DefaultAppBar(
-            title: "Articles",
-            actions: [
-              // Filter button
-              IconButton(
-                icon: const Icon(
-                  Icons.filter_alt_outlined,
-                ),
-                onPressed: () {
-                  _filterDialog(context, context.read<ArticleCubit>());
-                },
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.notifications_outlined,
-                ),
-                onPressed: () {
-                  context.router.pushNamed('NotificationScreen');
-                },
-              ),
-              horizontalMargin8,
-            ],
-          ),
-          body: BlocConsumer<ArticleCubit, ArticleState>(
-            listener: (context, state) {
-              // TODO: implement listener
-            },
-            builder: (context, state) {
-              return state.error != null
-                  ? Center(
-                      child: Text(state.error.toString()),
+        return BlocBuilder<ProfileDetailCubit, ProfileDetailState>(
+          builder: (context, state) {
+            return Scaffold(
+              floatingActionButton: state.profileData?.user.role == 'doctor'
+                  ? FloatingActionButton(
+                      onPressed: () {
+                        locator<NavigationService>().push(AddArticleRoute());
+                      },
+                      child: const Icon(Icons.add),
                     )
-                  : state.isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
+                  : null,
+              appBar: DefaultAppBar(
+                title: "Articles",
+                actions: [
+                  // Filter button
+                  IconButton(
+                    icon: const Icon(
+                      Icons.filter_alt_outlined,
+                    ),
+                    onPressed: () {
+                      _filterDialog(context, context.read<ArticleCubit>());
+                    },
+                  ),
+
+                  horizontalMargin8,
+                ],
+              ),
+              body: BlocConsumer<ArticleCubit, ArticleState>(
+                listener: (context, state) {
+                  // TODO: implement listener
+                },
+                builder: (context, state) {
+                  return state.error != null
+                      ? Center(
+                          child: Text(state.error.toString()),
                         )
-                      : state.data != null || state.data.isNotEmpty
-                          ? RefreshIndicator(
-                              onRefresh: () async {
-                                context.read<ArticleCubit>().getAllArticle();
-                              },
-                              child: ListView.separated(
-                                separatorBuilder: (context, index) =>
-                                    verticalMargin8,
-                                padding: horizontalPadding16,
-                                itemCount: state.data.length,
-                                itemBuilder: (context, index) {
-                                  final article = state.data[index];
-                                  return ArticleCardWidget(
-                                    onTap: () {
-                                      locator<NavigationService>().push(
-                                        ArticleDetailRoute(
-                                          id: article["_id"],
+                      : state.isLoading
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : state.data != null || state.data.isNotEmpty
+                              ? RefreshIndicator(
+                                  onRefresh: () async {
+                                    context
+                                        .read<ArticleCubit>()
+                                        .getAllArticle();
+                                  },
+                                  child: ListView.separated(
+                                    separatorBuilder: (context, index) =>
+                                        verticalMargin8,
+                                    padding: horizontalPadding16,
+                                    itemCount: state.data.length,
+                                    itemBuilder: (context, index) {
+                                      final article = state.data[index];
+                                      return ArticleCardWidget(
+                                        onTap: () {
+                                          locator<NavigationService>().push(
+                                            ArticleDetailRoute(
+                                              id: article["_id"],
+                                            ),
+                                          );
+                                        },
+                                        articleId: article["_id"],
+                                        authorLogo: article["author_image"],
+                                        authorName: article["author"],
+                                        articleTitle: article["title"],
+                                        publishedDate: DateTime.parse(
+                                          article["published_date"],
+                                        ).formatDateTime(
+                                          DateTimeFormatterString
+                                              .abbreviatedMonthDayYear,
                                         ),
                                       );
                                     },
-                                    articleId: article["_id"],
-                                    authorLogo: article["author_image"],
-                                    authorName: article["author"],
-                                    articleTitle: article["title"],
-                                    publishedDate: DateTime.parse(
-                                      article["published_date"],
-                                    ).formatDateTime(
-                                      DateTimeFormatterString
-                                          .abbreviatedMonthDayYear,
-                                    ),
-                                  );
-                                },
-                              ),
-                            )
-                          : const Center(
-                              child: Text("No data"),
-                            );
-            },
-          ),
+                                  ),
+                                )
+                              : const Center(
+                                  child: Text("No data"),
+                                );
+                },
+              ),
+            );
+          },
         );
       },
     );
@@ -151,8 +159,16 @@ class ArticlesView extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => locator<ArticleCubit>()..getAllArticle(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => locator<ArticleCubit>()..getAllArticle(),
+        ),
+        BlocProvider(
+          create: (context) =>
+              locator<ProfileDetailCubit>()..getProfileDetail(),
+        ),
+      ],
       child: this,
     );
   }

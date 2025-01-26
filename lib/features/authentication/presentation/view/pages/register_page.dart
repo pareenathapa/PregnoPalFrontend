@@ -28,17 +28,13 @@ class RegisterPage extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
 
   final TextEditingController fullName = TextEditingController(
-    text: "John Doe",
   );
   final TextEditingController emailController = TextEditingController(
-    text: "aayushpandey616@gmail.com",
   );
   final TextEditingController passwordController = TextEditingController(
-    text: "@ppleWas123",
   );
 
   final TextEditingController confirmPasswordController = TextEditingController(
-    text: "@ppleWas123",
   );
 
   final TextEditingController specializationController =
@@ -162,7 +158,7 @@ class RegisterPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.r),
                           ),
                           child: AppText(
-                            "Doctor",
+                            "Medical Personnel",
                             style: AllTextStyle.f14W5.copyWith(
                               color: state.selectedRole == "doctor"
                                   ? Colors.white
@@ -199,7 +195,7 @@ class RegisterPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.r),
                           ),
                           child: AppText(
-                            "User",
+                            "Parent",
                             style: AllTextStyle.f14W5.copyWith(
                               color: state.selectedRole == "user"
                                   ? Colors.white

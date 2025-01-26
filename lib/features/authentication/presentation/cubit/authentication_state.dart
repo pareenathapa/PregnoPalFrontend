@@ -11,6 +11,7 @@ class AuthenticationState with _$AuthenticationState {
     @Default(false) bool isLoggedOut,
     @Default(false) bool isRegisterSuccess,
     @Default(false) bool isLoginFormValid,
+    @Default(false) bool isPasswordChanged,
     @Default(false) bool isRegisterFormValid,
     @Default(false) bool isAgreed,
     @Default("user") String selectedRole,

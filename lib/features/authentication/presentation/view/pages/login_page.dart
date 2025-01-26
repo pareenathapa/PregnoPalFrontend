@@ -15,6 +15,7 @@ import '../../../../../../core/utils/extensions/form_validator_extension.dart';
 import '../../../../../../core/utils/extensions/snackbar_extension.dart';
 import '../../../../../../di/main_di.dart';
 import '../../../../../config/routes/route_paths.dart';
+import '../../../../../config/routes/routes.gr.dart';
 import '../../../../../generated/assets.gen.dart';
 import '../../cubit/authentication_cubit.dart';
 
@@ -24,10 +25,8 @@ class LoginPage extends StatelessWidget {
 
   final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController(
-    text: "aayushpandey616@gmail.com",
   );
   final TextEditingController passwordController = TextEditingController(
-    text: "@ppleWas123",
   );
 
   void _textFieldChanged(BuildContext context) {
@@ -147,7 +146,7 @@ class LoginPage extends StatelessWidget {
                   // Forgot Password
                   InkWell(
                     onTap: () {
-                      // locator<NavigationService>().push(ForgotPasswordRoute());
+                      locator<NavigationService>().push(ForgotPasswordScreen());
                     },
                     child: Text(
                       "Forgot your password?",

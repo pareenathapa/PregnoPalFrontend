@@ -109,7 +109,7 @@ class _ProfileChildrenSectionWidgetState
               ),
               verticalMargin16,
               SizedBox(
-                height: 150.h,
+                height: 110.h,
                 width: 1.sw,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,

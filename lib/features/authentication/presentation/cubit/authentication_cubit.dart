@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../core/common/feature/firebase/domain/usecase/get_device_token_usecase.dart';
+import '../../../../core/connections/api/dio_service.dart';
 import '../../../../core/failure/error_handler.dart';
 import '../../../../core/utils/extensions/form_validator_extension.dart';
 import '../../../../core/utils/token_storage.dart';
@@ -222,5 +223,55 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         isLoggedOut: true,
       ),
     );
+  }
+
+  void changePassword({
+    required String email,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    try {
+      emit(
+        state.copyWith(
+          isLoading: true,
+          error: null,
+        ),
+      );
+      final result =
+          await locator<DioService>().dio.post("/users/change-password", data: {
+        "email": email,
+        "password": password,
+        "confirmPassword": confirmPassword,
+      });
+      if (result.statusCode == 201) {
+        emit(
+          state.copyWith(
+            isLoading: false,
+            isPasswordChanged: true,
+            error: null,
+          ),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            isLoading: false,
+            isPasswordChanged: false,
+            error: AppErrorHandler(
+              message: "Failed to change password",
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          isPasswordChanged: false,
+          error: AppErrorHandler(
+            message: "Failed to change password",
+          ),
+        ),
+      );
+    }
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/constants/size/app_size.dart';
 import '../../config/routes/route_paths.dart';
+import '../../config/routes/routes.gr.dart';
 import '../../di/main_di.dart';
 import '../../features/profile/presentation/cubit/profile_detail_cubit.dart';
 import '../../generated/assets.gen.dart';
@@ -43,6 +44,16 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         actions: [
+          GestureDetector(
+            onTap: () {
+              locator<NavigationService>().push(const NotificationScreen());
+            },
+            child: Icon(
+              Icons.notifications_outlined,
+              size: 28.h,
+            ),
+          ),
+          horizontalMargin8,
           if (showActions) ...actions ?? <Widget>[],
           BlocBuilder<ProfileDetailCubit, ProfileDetailState>(
             builder: (context, state) {

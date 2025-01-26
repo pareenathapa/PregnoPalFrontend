@@ -22,7 +22,7 @@ class BottomNavWrapperPage extends StatelessWidget implements AutoRouteWrapper {
         const HomeScreen(),
         const CalenderScreen(),
         const AppointmentScreen(),
-        const HistoryScreen(),
+        HistoryScreen(),
         const ArticlesScreen(),
       ],
       builder: (context, child) {

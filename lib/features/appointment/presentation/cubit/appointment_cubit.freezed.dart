@@ -27,6 +27,7 @@ mixin _$AppointmentState {
   bool get isAppointmentUpdated => throw _privateConstructorUsedError;
   bool get isAppointmentRejected => throw _privateConstructorUsedError;
   bool get isAppointmentAccepted => throw _privateConstructorUsedError;
+  dynamic get todayAppointment => throw _privateConstructorUsedError;
 
   /// Create a copy of AppointmentState
   /// with the given fields replaced by the non-null parameter values.
@@ -51,7 +52,8 @@ abstract class $AppointmentStateCopyWith<$Res> {
       bool isAppointmentDeleted,
       bool isAppointmentUpdated,
       bool isAppointmentRejected,
-      bool isAppointmentAccepted});
+      bool isAppointmentAccepted,
+      dynamic todayAppointment});
 
   $AppErrorHandlerCopyWith<$Res>? get error;
 }
@@ -81,6 +83,7 @@ class _$AppointmentStateCopyWithImpl<$Res, $Val extends AppointmentState>
     Object? isAppointmentUpdated = null,
     Object? isAppointmentRejected = null,
     Object? isAppointmentAccepted = null,
+    Object? todayAppointment = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -123,6 +126,10 @@ class _$AppointmentStateCopyWithImpl<$Res, $Val extends AppointmentState>
           ? _value.isAppointmentAccepted
           : isAppointmentAccepted // ignore: cast_nullable_to_non_nullable
               as bool,
+      todayAppointment: freezed == todayAppointment
+          ? _value.todayAppointment
+          : todayAppointment // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
   }
 
@@ -159,7 +166,8 @@ abstract class _$$AppointmentStateImplCopyWith<$Res>
       bool isAppointmentDeleted,
       bool isAppointmentUpdated,
       bool isAppointmentRejected,
-      bool isAppointmentAccepted});
+      bool isAppointmentAccepted,
+      dynamic todayAppointment});
 
   @override
   $AppErrorHandlerCopyWith<$Res>? get error;
@@ -188,6 +196,7 @@ class __$$AppointmentStateImplCopyWithImpl<$Res>
     Object? isAppointmentUpdated = null,
     Object? isAppointmentRejected = null,
     Object? isAppointmentAccepted = null,
+    Object? todayAppointment = freezed,
   }) {
     return _then(_$AppointmentStateImpl(
       isLoading: null == isLoading
@@ -230,6 +239,10 @@ class __$$AppointmentStateImplCopyWithImpl<$Res>
           ? _value.isAppointmentAccepted
           : isAppointmentAccepted // ignore: cast_nullable_to_non_nullable
               as bool,
+      todayAppointment: freezed == todayAppointment
+          ? _value.todayAppointment
+          : todayAppointment // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ));
   }
 }
@@ -247,7 +260,8 @@ class _$AppointmentStateImpl extends _AppointmentState {
       this.isAppointmentDeleted = false,
       this.isAppointmentUpdated = false,
       this.isAppointmentRejected = false,
-      this.isAppointmentAccepted = false})
+      this.isAppointmentAccepted = false,
+      this.todayAppointment})
       : _allAppointments = allAppointments,
         super._();
 
@@ -284,10 +298,12 @@ class _$AppointmentStateImpl extends _AppointmentState {
   @override
   @JsonKey()
   final bool isAppointmentAccepted;
+  @override
+  final dynamic todayAppointment;
 
   @override
   String toString() {
-    return 'AppointmentState(isLoading: $isLoading, error: $error, allAppointments: $allAppointments, appointmentDatesAndTimes: $appointmentDatesAndTimes, selectedAppointment: $selectedAppointment, isAppointmentAdded: $isAppointmentAdded, isAppointmentDeleted: $isAppointmentDeleted, isAppointmentUpdated: $isAppointmentUpdated, isAppointmentRejected: $isAppointmentRejected, isAppointmentAccepted: $isAppointmentAccepted)';
+    return 'AppointmentState(isLoading: $isLoading, error: $error, allAppointments: $allAppointments, appointmentDatesAndTimes: $appointmentDatesAndTimes, selectedAppointment: $selectedAppointment, isAppointmentAdded: $isAppointmentAdded, isAppointmentDeleted: $isAppointmentDeleted, isAppointmentUpdated: $isAppointmentUpdated, isAppointmentRejected: $isAppointmentRejected, isAppointmentAccepted: $isAppointmentAccepted, todayAppointment: $todayAppointment)';
   }
 
   @override
@@ -313,7 +329,9 @@ class _$AppointmentStateImpl extends _AppointmentState {
             (identical(other.isAppointmentRejected, isAppointmentRejected) ||
                 other.isAppointmentRejected == isAppointmentRejected) &&
             (identical(other.isAppointmentAccepted, isAppointmentAccepted) ||
-                other.isAppointmentAccepted == isAppointmentAccepted));
+                other.isAppointmentAccepted == isAppointmentAccepted) &&
+            const DeepCollectionEquality()
+                .equals(other.todayAppointment, todayAppointment));
   }
 
   @override
@@ -328,7 +346,8 @@ class _$AppointmentStateImpl extends _AppointmentState {
       isAppointmentDeleted,
       isAppointmentUpdated,
       isAppointmentRejected,
-      isAppointmentAccepted);
+      isAppointmentAccepted,
+      const DeepCollectionEquality().hash(todayAppointment));
 
   /// Create a copy of AppointmentState
   /// with the given fields replaced by the non-null parameter values.
@@ -351,7 +370,8 @@ abstract class _AppointmentState extends AppointmentState {
       final bool isAppointmentDeleted,
       final bool isAppointmentUpdated,
       final bool isAppointmentRejected,
-      final bool isAppointmentAccepted}) = _$AppointmentStateImpl;
+      final bool isAppointmentAccepted,
+      final dynamic todayAppointment}) = _$AppointmentStateImpl;
   const _AppointmentState._() : super._();
 
   @override
@@ -374,6 +394,8 @@ abstract class _AppointmentState extends AppointmentState {
   bool get isAppointmentRejected;
   @override
   bool get isAppointmentAccepted;
+  @override
+  dynamic get todayAppointment;
 
   /// Create a copy of AppointmentState
   /// with the given fields replaced by the non-null parameter values.

@@ -6,6 +6,9 @@ abstract class IAppointmentRepository {
   Future<Either<AppErrorHandler, List<Map<String, dynamic>>>>
       getAllAppointments({
     String? status,
+    String? doctorId,
+    String? childId,
+    String? sort,
   });
 
   Future<Either<AppErrorHandler, dynamic>> getSingleAppointment({

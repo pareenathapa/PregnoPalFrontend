@@ -22,6 +22,7 @@ import '../features/appointment/di/appointment_di.dart';
 import '../features/appointment/presentation/cubit/appointment_cubit.dart';
 import '../features/articles/di/article_di.dart';
 import '../features/authentication/di/auth_di.dart';
+import '../features/notifications/presentation/cubit/notification_cubit.dart';
 import '../features/profile/di/profile_di.dart';
 
 final locator = GetIt.instance;
@@ -94,6 +95,9 @@ class MainDI {
     );
     locator.registerLazySingleton<AssetPngCacheService>(
       () => AssetPngCacheService(),
+    );
+    locator.registerFactory<NotificationCubit>(
+      () => NotificationCubit(),
     );
 
     // Feature Containers

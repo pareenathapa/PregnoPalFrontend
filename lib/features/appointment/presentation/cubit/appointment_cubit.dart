@@ -88,6 +88,9 @@ class AppointmentCubit extends Cubit<AppointmentState> {
 
   Future<void> getAllAppointments({
     String? status,
+    String? doctorId,
+    String? childId,
+    String? sort,
   }) async {
     emit(
       state.copyWith(
@@ -95,7 +98,14 @@ class AppointmentCubit extends Cubit<AppointmentState> {
         error: null,
       ),
     );
-    final result = await _getAllAppointmentUsecase(status);
+    final result = await _getAllAppointmentUsecase(
+      AppointmentFilterParams(
+        status: status,
+        doctorId: doctorId,
+        childId: childId,
+        sort: sort,
+      ),
+    );
     result.fold(
       (failure) {
         emit(
@@ -122,6 +132,7 @@ class AppointmentCubit extends Cubit<AppointmentState> {
       state.copyWith(
         isLoading: true,
         error: null,
+        selectedAppointment: null,
       ),
     );
     final result = await _getSingleAppointmentUsecase(id);
@@ -279,6 +290,37 @@ class AppointmentCubit extends Cubit<AppointmentState> {
     }
   }
 
+  Future<void> completeAppointment({
+    required String appointmentId,
+    required String comment,
+  }) async {
+    final response = await locator<DioService>().dio.post(
+      "/appointments/complete/$appointmentId",
+      data: {
+        "comment": comment,
+      },
+    );
+
+    if (response.statusCode == 201) {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          error: null,
+          isAppointmentAccepted: true,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          error: AppErrorHandler(
+            message: "Failed to reject appointment",
+          ),
+        ),
+      );
+    }
+  }
+
   Future<void> acceptedAppointment(String appointmentId) async {
     final response = await locator<DioService>()
         .dio
@@ -331,6 +373,32 @@ class AppointmentCubit extends Cubit<AppointmentState> {
       emit(
         state.copyWith(
           isLoading: false,
+          error: AppErrorHandler(
+            message: "Failed to reject appointment",
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> getTodayAppointment() async {
+    final response = await locator<DioService>().dio.get(
+          "/appointments/today/now",
+        );
+
+    if (response.statusCode == 200) {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          error: null,
+          todayAppointment: response.data,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          isLoading: false,
+          todayAppointment: null,
           error: AppErrorHandler(
             message: "Failed to reject appointment",
           ),

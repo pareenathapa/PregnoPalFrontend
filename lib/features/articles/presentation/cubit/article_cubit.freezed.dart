@@ -21,6 +21,7 @@ mixin _$ArticleState {
   dynamic get data => throw _privateConstructorUsedError;
   dynamic get selectedArticle => throw _privateConstructorUsedError;
   String get filter => throw _privateConstructorUsedError;
+  bool get createdAticle => throw _privateConstructorUsedError;
 
   /// Create a copy of ArticleState
   /// with the given fields replaced by the non-null parameter values.
@@ -40,7 +41,8 @@ abstract class $ArticleStateCopyWith<$Res> {
       AppErrorHandler? error,
       dynamic data,
       dynamic selectedArticle,
-      String filter});
+      String filter,
+      bool createdAticle});
 
   $AppErrorHandlerCopyWith<$Res>? get error;
 }
@@ -65,6 +67,7 @@ class _$ArticleStateCopyWithImpl<$Res, $Val extends ArticleState>
     Object? data = freezed,
     Object? selectedArticle = freezed,
     Object? filter = null,
+    Object? createdAticle = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -87,6 +90,10 @@ class _$ArticleStateCopyWithImpl<$Res, $Val extends ArticleState>
           ? _value.filter
           : filter // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAticle: null == createdAticle
+          ? _value.createdAticle
+          : createdAticle // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -118,7 +125,8 @@ abstract class _$$ArticleStateImplCopyWith<$Res>
       AppErrorHandler? error,
       dynamic data,
       dynamic selectedArticle,
-      String filter});
+      String filter,
+      bool createdAticle});
 
   @override
   $AppErrorHandlerCopyWith<$Res>? get error;
@@ -142,6 +150,7 @@ class __$$ArticleStateImplCopyWithImpl<$Res>
     Object? data = freezed,
     Object? selectedArticle = freezed,
     Object? filter = null,
+    Object? createdAticle = null,
   }) {
     return _then(_$ArticleStateImpl(
       isLoading: null == isLoading
@@ -164,6 +173,10 @@ class __$$ArticleStateImplCopyWithImpl<$Res>
           ? _value.filter
           : filter // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAticle: null == createdAticle
+          ? _value.createdAticle
+          : createdAticle // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -176,7 +189,8 @@ class _$ArticleStateImpl extends _ArticleState {
       this.error,
       this.data,
       this.selectedArticle,
-      this.filter = "newest"})
+      this.filter = "newest",
+      this.createdAticle = false})
       : super._();
 
   @override
@@ -191,10 +205,13 @@ class _$ArticleStateImpl extends _ArticleState {
   @override
   @JsonKey()
   final String filter;
+  @override
+  @JsonKey()
+  final bool createdAticle;
 
   @override
   String toString() {
-    return 'ArticleState(isLoading: $isLoading, error: $error, data: $data, selectedArticle: $selectedArticle, filter: $filter)';
+    return 'ArticleState(isLoading: $isLoading, error: $error, data: $data, selectedArticle: $selectedArticle, filter: $filter, createdAticle: $createdAticle)';
   }
 
   @override
@@ -208,7 +225,9 @@ class _$ArticleStateImpl extends _ArticleState {
             const DeepCollectionEquality().equals(other.data, data) &&
             const DeepCollectionEquality()
                 .equals(other.selectedArticle, selectedArticle) &&
-            (identical(other.filter, filter) || other.filter == filter));
+            (identical(other.filter, filter) || other.filter == filter) &&
+            (identical(other.createdAticle, createdAticle) ||
+                other.createdAticle == createdAticle));
   }
 
   @override
@@ -218,7 +237,8 @@ class _$ArticleStateImpl extends _ArticleState {
       error,
       const DeepCollectionEquality().hash(data),
       const DeepCollectionEquality().hash(selectedArticle),
-      filter);
+      filter,
+      createdAticle);
 
   /// Create a copy of ArticleState
   /// with the given fields replaced by the non-null parameter values.
@@ -235,7 +255,8 @@ abstract class _ArticleState extends ArticleState {
       final AppErrorHandler? error,
       final dynamic data,
       final dynamic selectedArticle,
-      final String filter}) = _$ArticleStateImpl;
+      final String filter,
+      final bool createdAticle}) = _$ArticleStateImpl;
   const _ArticleState._() : super._();
 
   @override
@@ -248,6 +269,8 @@ abstract class _ArticleState extends ArticleState {
   dynamic get selectedArticle;
   @override
   String get filter;
+  @override
+  bool get createdAticle;
 
   /// Create a copy of ArticleState
   /// with the given fields replaced by the non-null parameter values.

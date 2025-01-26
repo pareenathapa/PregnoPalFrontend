@@ -33,14 +33,6 @@ class HomeView extends StatelessWidget implements AutoRouteWrapper {
       child: Scaffold(
         appBar: DefaultAppBar(
           actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.notifications_outlined,
-              ),
-              onPressed: () {
-                context.router.pushNamed('NotificationScreen');
-              },
-            ),
             horizontalMargin8,
           ],
         ),
@@ -49,33 +41,43 @@ class HomeView extends StatelessWidget implements AutoRouteWrapper {
             return Column(
               children: [
                 // Image
-                Container(
-                  height: 160.h,
-                  width: 1.sw,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: allRadius12,
-                    image: DecorationImage(
-                      image: AssetImage(
-                        Assets.images.test.path,
+                Padding(
+                  padding: horizontalPadding12,
+                  child: Container(
+                    height: 160.h,
+                    width: 1.sw,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: allRadius12,
+                      image: DecorationImage(
+                        image: AssetImage(
+                          Assets.images.test.path,
+                        ),
+                        fit: BoxFit.cover,
                       ),
-                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 verticalMargin12,
                 // Reminder Text
-                Container(
-                  width: 1.sw,
-                  padding: horizontalPadding12 + verticalPadding12,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                    color: Color(0xffccffc1),
-                    borderRadius: allRadius12,
-                  ),
-                  child: Text(
-                    'Reminder: You have an appointment today',
-                    style: AllTextStyle.f14W4,
+                Padding(
+                  padding: horizontalPadding12,
+                  child: Container(
+                    width: 1.sw,
+                    padding: horizontalPadding12 + verticalPadding12,
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                      color: Color(0xffccffc1),
+                      borderRadius: allRadius12,
+                    ),
+                    child: Text(
+                      state.todayAppointment != null &&
+                              state.todayAppointment["earliestAppointment"] !=
+                                  null
+                          ? 'Reminder: ${state.todayAppointment["earliestAppointment"]['title']} at ${DateTime.fromMillisecondsSinceEpoch(int.parse(state.todayAppointment["earliestAppointment"]['time'])).formatDateTime(DateTimeFormatterString.civilianTime)}'
+                          : "You don't have any appointment today.",
+                      style: AllTextStyle.f14W4,
+                    ),
                   ),
                 ),
                 verticalMargin16,
@@ -222,7 +224,8 @@ class HomeView extends StatelessWidget implements AutoRouteWrapper {
       providers: [
         BlocProvider(
           create: (context) => locator<AppointmentCubit>()
-            ..getAllAppointments(status: "Accepted"),
+            ..getAllAppointments(status: "Accepted")
+            ..getTodayAppointment(),
         ),
         BlocProvider<ProfileDetailCubit>(
           create: (_) => locator<ProfileDetailCubit>()..onCheckLoginStatus(),
