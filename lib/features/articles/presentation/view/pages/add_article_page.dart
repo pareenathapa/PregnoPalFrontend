@@ -50,7 +50,7 @@ class AddArticlePage extends StatelessWidget implements AutoRouteWrapper {
             _articleCoverController.clear();
 
             context.showSnackBar(message: "Article Created Successfully");
-            locator<NavigationService>().maybePopTop();
+            
           }
           if (state.error != null) {
             context.showSnackBar(
